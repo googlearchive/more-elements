@@ -1,0 +1,42 @@
+<!--
+Copyright 2012 The Toolkitchen Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<element name="ajaxorg-ace">
+<link rel="components" href="../../toolkit/src/g-component.html">
+<template>
+  <style type="text/css" media="screen">
+    @host {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+    .ajaxorg-ace {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+  </style>
+  <div class="ajaxorg-ace" id="editor"></div>
+</template>
+<script src="src-min-noconflict/ace.js"></script>
+<script>
+  this.component({
+    ready: function() {
+      var p = this.node.__path__;
+      ace.config.set('basePath', (p ? p + '/' : '') + 'src-min-noconflict/');
+      var editor = ace.edit(this.$.editor);
+      editor.setTheme('ace/theme/monokai');
+      editor.getSession().setMode('ace/mode/javascript');
+      editor.setValue(this.node.lightDOM.textContent, 1);
+      editor.focus();
+      this.editor = editor;
+    }
+  });
+</script>
+</element>
