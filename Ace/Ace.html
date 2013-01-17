@@ -3,7 +3,7 @@ Copyright 2012 The Toolkitchen Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<element name="ajaxorg-ace">
+<element name="ajaxorg-ace" attributes="theme">
 <link rel="components" href="../../toolkit/src/g-component.html">
 <template>
   <style type="text/css" media="screen">
@@ -27,15 +27,20 @@ license that can be found in the LICENSE file.
 <script src="src-min-noconflict/ace.js"></script>
 <script>
   this.component({
+    theme: "monokai",
     ready: function() {
       var p = this.node.__path__;
       ace.config.set('basePath', (p ? p + '/' : '') + 'src-min-noconflict/');
       var editor = ace.edit(this.$.editor);
-      editor.setTheme('ace/theme/monokai');
+      //editor.setTheme('ace/theme/monokai');
       editor.getSession().setMode('ace/mode/javascript');
       editor.setValue(this.node.lightDOM.textContent, 1);
       editor.focus();
       this.editor = editor;
+      this.themeChanged();
+    },
+    themeChanged: function() {
+      this.editor.setTheme('ace/theme/' + this.theme);
     }
   });
 </script>
