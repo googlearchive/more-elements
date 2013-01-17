@@ -74,9 +74,15 @@ license that can be found in the LICENSE file.
         display: inline-block;
         width: 60px;
       }
+      
+      @media screen and (max-width: 520px) {
+        .details {
+          display: none;
+        }
+      }
     </style>
     <div class="stock-label large">{{response.company.data}}</div>
-    <div class="stock-label stock-desc">{{response.exchange.data}}: {{response.symbol.data}}</div>
+    <div class="stock-label stock-desc">{{response.exchange.data}}: {{symbol}}</div>
     <div class="stock-label large quote">
       <span class="price">{{response.last.data}}</span>
       <span class="change {{change}}">{{response.change.data}} ({{response.perc_change.data}}%)</span>
