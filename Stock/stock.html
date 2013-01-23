@@ -5,7 +5,7 @@ license that can be found in the LICENSE file.
 -->
 <element name="x-stock" attributes="symbol autoupdate">
   <link rel="components" href="../../toolkit/src/g-component.html">
-  <link rel="components" href="../../toolkit/src/g-ajax.html">
+  <link rel="components" href="../../toolkit/src/g-jsonp.html">
   <template>
     <style>
       @host {
@@ -81,38 +81,38 @@ license that can be found in the LICENSE file.
         }
       }
     </style>
-    <div class="stock-label large">{{response.company.data}}</div>
-    <div class="stock-label stock-desc">{{response.exchange.data}}: {{symbol}}</div>
+    <div class="stock-label large">{{response.name}}</div>
+    <div class="stock-label stock-desc">{{response.e}}: {{symbol}}</div>
     <div class="stock-label large quote">
-      <span class="price">{{response.last.data}}</span>
-      <span class="change {{change}}">{{response.change.data}} ({{response.perc_change.data}}%)</span>
+      <span class="price">{{response.l}}</span>
+      <span class="change {{change}}">{{response.c}} ({{response.cp}}%)</span>
     </div>
     <div class="more">
       <div class="chart">
-        <img src="https://www.google.com/finance/chart?q={{response.exchange.data}}:{{symbol}}&amp;tlf=12&amp;chst=vks&amp;p=1d&amp;chs=327x96&amp;chsc=1&amp;nocache={{random}}" />
+        <img src="https://www.google.com/finance/chart?q={{response.e}}:{{symbol}}&amp;tlf=12&amp;chst=vks&amp;p=1d&amp;chs=327x96&amp;chsc=1&amp;nocache={{random}}" />
       </div>
       <div class="stock-label small details">
-        <div><label>Open</label>{{response.open.data}}</div>
-        <div><label>High</label>{{response.high.data}}</div>
-        <div><label>Low</label>{{response.low.data}}</div>
-        <div><label>Volume</label>{{response.volume.data}}</div>
-        <div><label>Avg Vol</label>{{response.avg_volume.data}}000</div>
-        <div><label>Mkt Cap</label>{{mktCap}}</div>
+        <div><label>Open</label>{{response.op}}</div>
+        <div><label>High</label>{{response.hi}}</div>
+        <div><label>Low</label>{{response.lo}}</div>
+        <div><label>Volume</label>{{response.vo}}</div>
+        <div><label>Avg Vol</label>{{response.avvo}}</div>
+        <div><label>Mkt Cap</label>{{response.mc}}</div>
       </div>
     </div>
-    <g-ajax id="ajax" handleAs="json" response="{{ajaxResponse}}"></g-ajax>
+    <g-jsonp id="jsonp" response="{{jsonpResponse}}"></g-jsonp>
   </template>
   <script>
     this.component({
       publish: {
-        updateinterval: 300000
+        updateinterval: 60000
       },
       ready: function() {
         this.go();
       },
       go: function() {
-        this.$.ajax.url = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20google.igoogle.stock%20where%20stock%3D"' + this.symbol + '"%3B&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
-        this.$.ajax.go();
+        this.$.jsonp.url = 'https://clients1.google.com/finance/info?q=' + this.symbol + '&client=ob&infotype=infoonebox&callback=';
+        this.$.jsonp.go();
       },
       autoupdateChanged: function() {
         if (this.autoupdate) {
@@ -121,13 +121,11 @@ license that can be found in the LICENSE file.
           clearInterval(this.intervalId);
         }
       },
-      ajaxResponseChanged: function(e, inDetail) {
-        var results = this.ajaxResponse.query.results;
-        if (results) {
-          var r = this.response = results.xml_api_reply.finance;
+      jsonpResponseChanged: function() {
+        var r = this.response = this.jsonpResponse && this.jsonpResponse[0];
+        if (r) {
           this.random = Math.random() * 10000;
-          this.change = Number(r.change.data) > 0 ? 'up' : 'down';
-          this.mktCap = (r.market_cap.data / 1000).toFixed(2) + 'B';
+          this.change = Number(r.c) >= 0 ? 'up' : 'down';
         }
       }
     });
