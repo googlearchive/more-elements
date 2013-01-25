@@ -3,45 +3,49 @@ Copyright 2013 The Toolkitchen Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<element name="wu-weather">
+<element name="wu-weather" attributes="autoupdate">
   <link rel="components" href="../../toolkit/src/g-jsonp.html"/>
   <template>
     <style>
-      .weather-label {
-        display: none;
-        font-family: 'Helvetica Neue', Helvetica, Arial, 'open sans', sans-serif;
+      @host {
+        display: inline-block;
+        -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        padding: 20px;
+      }
+      h1, div {
+        font-family: arial,sans-serif;
+        font-size: medium;
+        font-weight: lighter;
+        color: #878787;
+      }
+      .location {
+        font-size: x-large;
+      }
+      .temperature, .weather {
         font-size: large;
       }
-      .weather.has-position .weather-label {
-        display: block;
-      }
-      .weather-label.placeholder {
-        display: block;
-      }
-      .weather.has-position .weather-label.placeholder {
-        display: none;
-      }
-      .weather-icon {
+      .icon {
         float: left;
         margin-right: 10px;
       }
     </style>
-    <div id="weather" class="weather">
-      <img class="weather-icon" src="{{response.icon_url}}">
-      <div class="weather-label location">
-        {{response.display_location.full}}
-      </div>
-      <div class="weather-label temperature">
-        {{response.temperature_string}}
-      </div>
-      <div class="weather-label placeholder">
-        Getting your location...
-      </div>
+    <h1 class="location">
+      {{response.display_location.full}}
+    </h1>
+    <img class="icon" src="{{response.icon_url}}">
+    <div class="weather">
+      {{response.weather}}
+    </div>
+    <div class="temperature">
+      {{response.temperature_string}}
     </div>
     <g-jsonp id="jsonp" handleAs="json" response="{{jsonpResponse}}"></g-jsonp>
   </template>
   <script>
     this.component({
+      publish: {
+        updateInterval: 60000
+      },
       apikey: '6d9e44e91f890cae',
       position: {
         coords: {
@@ -50,19 +54,26 @@ license that can be found in the LICENSE file.
         }
       },
       ready: function() {
+        this.updatePosition();
+        this.autoupdateChanged();
         this.positionChanged();
-        // Get the current location.
-        window.navigator.geolocation.watchPosition(
-            this.watchPositionSuccess.bind(this),
-            this.watchPositionError.bind(this), {timeout: 10000});
       },
-      watchPositionSuccess: function(position) {
-        this.position = position;
-      },
-      watchPositionError: function(error) {
-        console.log('PositionError', error);
+      autoupdateChanged: function() {
+        if (this.autoupdate) {
+          if (!this.intervalId) {
+            this.intervalId = setInterval(this.updatePosition.bind(this),
+                this.updateInterval);
+          }
+        } else {
+          clearInterval(this.intervalId);
+          this.intervalId = null;
+        }
       },
       positionChanged: function() {
+        if (this.inflight) {
+          return;
+        }
+        this.inflight = true;
         this.$.jsonp.url = 'http://api.wunderground.com/api/' +
             this.apikey + '/conditions/q/' +
             this.position.coords.latitude + ',' +
@@ -70,9 +81,20 @@ license that can be found in the LICENSE file.
         this.$.jsonp.go();
       },
       jsonpResponseChanged: function() {
-        this.$.weather.className += ' has-position';
-        this.$.weather.style.display = 'block';
+        this.inflight = false;
         this.response = this.jsonpResponse.current_observation;
+      },
+      updatePosition: function() {
+        // Get the current location.
+        navigator.geolocation.getCurrentPosition(
+            this.getCurrentPositionSuccess.bind(this),
+            this.getCurrentPositionError.bind(this), {timeout: 10000});
+      },
+      getCurrentPositionSuccess: function(position) {
+        this.position = position;
+      },
+      getCurrentPositionError: function(error) {
+        console.log('PositionError', error);
       }
     });
   </script>
