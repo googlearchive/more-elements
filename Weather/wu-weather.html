@@ -1,0 +1,79 @@
+<!--
+Copyright 2013 The Toolkitchen Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<element name="wu-weather">
+  <link rel="components" href="../../toolkit/src/g-jsonp.html"/>
+  <template>
+    <style>
+      .weather-label {
+        display: none;
+        font-family: 'Helvetica Neue', Helvetica, Arial, 'open sans', sans-serif;
+        font-size: large;
+      }
+      .weather.has-position .weather-label {
+        display: block;
+      }
+      .weather-label.placeholder {
+        display: block;
+      }
+      .weather.has-position .weather-label.placeholder {
+        display: none;
+      }
+      .weather-icon {
+        float: left;
+        margin-right: 10px;
+      }
+    </style>
+    <div id="weather" class="weather">
+      <img class="weather-icon" src="{{response.icon_url}}">
+      <div class="weather-label location">
+        {{response.display_location.full}}
+      </div>
+      <div class="weather-label temperature">
+        {{response.temperature_string}}
+      </div>
+      <div class="weather-label placeholder">
+        Getting your location...
+      </div>
+    </div>
+    <g-jsonp id="jsonp" handleAs="json" response="{{jsonpResponse}}"></g-jsonp>
+  </template>
+  <script>
+    this.component({
+      apikey: '6d9e44e91f890cae',
+      position: {
+        coords: {
+          latitude: 37.773285,
+          longitude: -122.417725
+        }
+      },
+      ready: function() {
+        this.positionChanged();
+        // Get the current location.
+        window.navigator.geolocation.watchPosition(
+            this.watchPositionSuccess.bind(this),
+            this.watchPositionError.bind(this), {timeout: 10000});
+      },
+      watchPositionSuccess: function(position) {
+        this.position = position;
+      },
+      watchPositionError: function(error) {
+        console.log('PositionError', error);
+      },
+      positionChanged: function() {
+        this.$.jsonp.url = 'http://api.wunderground.com/api/' +
+            this.apikey + '/conditions/q/' +
+            this.position.coords.latitude + ',' +
+            this.position.coords.longitude + '.json?callback=';
+        this.$.jsonp.go();
+      },
+      jsonpResponseChanged: function() {
+        this.$.weather.className += ' has-position';
+        this.$.weather.style.display = 'block';
+        this.response = this.jsonpResponse.current_observation;
+      }
+    });
+  </script>
+</element>
