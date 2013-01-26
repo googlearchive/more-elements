@@ -23,23 +23,53 @@ license that can be found in the LICENSE file.
       }
       .temperature, .weather {
         font-size: large;
+        color: #000000;
       }
-      .icon {
+      .current-icon {
         float: left;
         margin-right: 10px;
       }
+      .forecast {
+        clear: both;
+        margin-top: 10px;
+      }
+      .forecast-day {
+        display: inline-block;
+        padding: 5px;
+        text-align: center;
+      }
+      .forecast-day div {
+        font-size: small;
+      }
     </style>
     <h1 class="location">
-      {{response.display_location.full}}
+      {{current.display_location.full}}
     </h1>
-    <img class="icon" src="{{response.icon_url}}">
+    <img class="current-icon" src="{{current.icon_url}}">
     <div class="weather">
-      {{response.weather}}
+      {{current.weather}}
     </div>
     <div class="temperature">
-      {{response.temperature_string}}
+      {{current.temperature_string}}
     </div>
-    <g-jsonp id="jsonp" handleAs="json" response="{{jsonpResponse}}"></g-jsonp>
+    <div class="forecast">
+      <template iterate="forecast.forecastday">
+        <div class="forecast-day">
+          <div class="date">{{date.weekday_short}}</div>
+          <img class="forecast-icon" src="{{icon_url}}" width="36px" height="36px">
+          <div class="high-low">
+            {{high.fahrenheit}}/{{low.fahrenheit}} &deg;F
+          </div>
+          <div class="high-low">
+            ({{high.celsius}}/{{low.celsius}} &deg;C)
+          </div>
+        </div>
+      </template>
+    </div>
+    <g-jsonp id="jsonp_current" handleAs="json" 
+        response="{{currentConditionsResponse}}"></g-jsonp>
+    <g-jsonp id="jsonp_forecast" handleAs="json"
+        response="{{forecastResponse}}"></g-jsonp>
   </template>
   <script>
     this.component({
@@ -70,19 +100,26 @@ license that can be found in the LICENSE file.
         }
       },
       positionChanged: function() {
-        if (this.inflight) {
-          return;
+        if (!this.$.jsonp_current.isInFlight()) {
+          this.$.jsonp_current.url = 'http://api.wunderground.com/api/' +
+              this.apikey + '/conditions/q/' +
+              this.position.coords.latitude + ',' +
+              this.position.coords.longitude + '.json?callback=';
+          this.$.jsonp_current.go();
         }
-        this.inflight = true;
-        this.$.jsonp.url = 'http://api.wunderground.com/api/' +
-            this.apikey + '/conditions/q/' +
-            this.position.coords.latitude + ',' +
-            this.position.coords.longitude + '.json?callback=';
-        this.$.jsonp.go();
+        if (!this.$.jsonp_forecast.isInFlight()) {
+          this.$.jsonp_forecast.url = 'http://api.wunderground.com/api/' +
+              this.apikey + '/forecast/q/' +
+              this.position.coords.latitude + ',' +
+              this.position.coords.longitude + '.json?callback=';
+          this.$.jsonp_forecast.go();
+        }
       },
-      jsonpResponseChanged: function() {
-        this.inflight = false;
-        this.response = this.jsonpResponse.current_observation;
+      currentConditionsResponseChanged: function() {
+        this.current = this.currentConditionsResponse.current_observation;
+      },
+      forecastResponseChanged: function() {
+        this.forecast = this.forecastResponse.forecast.simpleforecast;
       },
       updatePosition: function() {
         // Get the current location.
