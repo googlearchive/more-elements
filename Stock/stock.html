@@ -89,7 +89,7 @@ license that can be found in the LICENSE file.
     </div>
     <div class="more">
       <div class="chart">
-        <img src="https://www.google.com/finance/chart?q={{response.e}}:{{symbol}}&amp;tlf=12&amp;chst=vks&amp;p=1d&amp;chs=327x96&amp;chsc=1&amp;nocache={{random}}" />
+        <img src="https://www.google.com/finance/chart?q={{response.e}}:{{symbol}}&amp;tlf=12&amp;chst=vks&amp;p=1d&amp;chs={{chartWidth}}x96&amp;chsc=1&amp;nocache={{random}}" />
       </div>
       <div class="stock-label small details">
         <div><label>Open</label>{{response.op}}</div>
@@ -108,7 +108,13 @@ license that can be found in the LICENSE file.
         updateinterval: 60000
       },
       ready: function() {
+        var mq = window.matchMedia('(max-width: 400px)');
+        mq.addListener(this.layoutChange.bind(this));
+        this.layoutChange(mq);
         this.go();
+      },
+      layoutChange: function(inQuery) {
+        this.chartWidth = inQuery.matches ? 256 : 327; 
       },
       go: function() {
         this.$.jsonp.url = 'https://clients1.google.com/finance/info?q=' + this.symbol + '&client=ob&infotype=infoonebox&callback=';
