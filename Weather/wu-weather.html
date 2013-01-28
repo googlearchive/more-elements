@@ -82,9 +82,32 @@ license that can be found in the LICENSE file.
         }
       },
       ready: function() {
-        this.updatePosition();
+        this.loadFromStorage();
         this.autoupdateChanged();
-        this.positionChanged();
+      },
+      loadFromStorage: function() {
+        var data = localStorage.getItem('wu-weather-data');
+        var cached = data && JSON.parse(data);
+        // Discard stored data if it's too old.
+        if (!cached ||
+            (new Date() - cached.timestamp) > (60 * 60 * 1000)) {
+          this.positionChanged();
+          this.updatePosition();
+          return;
+        }
+        this.current = cached.current;
+        this.forecast = cached.forecast;
+      },
+      saveToStorage: function() {
+        // Only store when we have all the data.
+        if (this.current && this.forecast) {
+          var data = {
+            current: this.current,
+            forecast: this.forecast,
+            timestamp: new Date().getTime()
+          };
+          localStorage.setItem('wu-weather-data', JSON.stringify(data));
+        }
       },
       autoupdateChanged: function() {
         if (this.autoupdate) {
@@ -115,9 +138,11 @@ license that can be found in the LICENSE file.
       },
       currentConditionsResponseChanged: function() {
         this.current = this.currentConditionsResponse.current_observation;
+        this.saveToStorage();
       },
       forecastResponseChanged: function() {
         this.forecast = this.forecastResponse.forecast.simpleforecast;
+        this.saveToStorage();
       },
       updatePosition: function() {
         // Get the current location.
