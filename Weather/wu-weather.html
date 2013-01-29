@@ -43,13 +43,11 @@ license that can be found in the LICENSE file.
     <h1 class="location">
       {{current.display_location.full}}
     </h1>
-    <img class="current-icon" src="{{current.icon_url}}">
-    <div class="weather">
-      {{current.weather}}
-    </div>
-    <div class="temperature">
-      {{current.temperature_string}}
-    </div>
+    <template instantiate="current">
+      <img class="current-icon" src="{{icon_url}}">
+      <div class="weather">{{weather}}</div>
+      <div class="temperature">{{temperature_string}}</div>
+    </template>
     <div class="forecast">
       <template iterate="forecast.forecastday">
         <div class="forecast-day">
