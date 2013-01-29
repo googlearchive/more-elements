@@ -122,14 +122,14 @@ license that can be found in the LICENSE file.
       },
       positionChanged: function() {
         if (!this.$.jsonp_current.isInFlight()) {
-          this.$.jsonp_current.url = 'http://api.wunderground.com/api/' +
+          this.$.jsonp_current.url = 'https://api.wunderground.com/api/' +
               this.apikey + '/conditions/q/' +
               this.position.coords.latitude + ',' +
               this.position.coords.longitude + '.json?callback=';
           this.$.jsonp_current.go();
         }
         if (!this.$.jsonp_forecast.isInFlight()) {
-          this.$.jsonp_forecast.url = 'http://api.wunderground.com/api/' +
+          this.$.jsonp_forecast.url = 'https://api.wunderground.com/api/' +
               this.apikey + '/forecast/q/' +
               this.position.coords.latitude + ',' +
               this.position.coords.longitude + '.json?callback=';
