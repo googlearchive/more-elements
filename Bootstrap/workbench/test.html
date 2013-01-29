@@ -8,7 +8,7 @@ license that can be found in the LICENSE file.
 <head>
 <title>Toolkit::Bootstrap</title>
   <!-- Bootstrap -->
-  <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
   <!-- Toolkit -->
   <script src="../../../toolkit/platform/platform.js"></script>
 </head>
@@ -24,6 +24,7 @@ license that can be found in the LICENSE file.
       <bp-navbar-text-right>
         Logged in as <bp-navbar-link>Username</bp-navbar-link>
       </bp-navbar-text-right>
+      <!-- styling inside bp-nav requires <li><a> -->
       <bp-nav selected="0">
         <li><a href="#">Home</a></li>
         <li><a href="#about">About</a></li>
@@ -64,6 +65,16 @@ license that can be found in the LICENSE file.
           this.node.classList.add('btn', 'btn-navbar');
           this.node.setAttribute('data-toggle', 'collapse');
           this.node.setAttribute('data-target', '.nav-collapse');
+        }
+      });
+    </script>
+  </element>
+  <!-- -->
+  <element name="bp-icon-bar">
+    <script>
+      this.component && this.component({
+        ready: function() {
+          this.node.classList.add('icon-bar');
         }
       });
     </script>
@@ -117,9 +128,44 @@ license that can be found in the LICENSE file.
       this.component && this.component({
         selectedClass: "active",
         ready: function() {
+          this.$super();
           this.node.classList.add('nav');
         }
       });
     </script>
   </element>
+  <!-- -->
+  <!--
+  <element name="bp-nav-item" extends="li">
+    <template>
+      <a id="anchor" href="#"><content></content></a>
+    </template>
+    <script>
+      this.component && this.component({
+        ready: function() {
+           this.nameChanged();
+        },
+        nameChanged: function() {
+          this.$.anchor.setAttribute("href", this.name);
+        }
+      });
+    </script>
+  </element>
+  <element name="bp-ni" extends="a">
+    <template>
+      <content></content>
+    </template>
+    <script>
+      this.component && this.component({
+        ready: function() {
+           this.nameChanged();
+        },
+        nameChanged: function() {
+          this.node.setAttribute("href", this.name);
+        }
+      });
+    </script>
+  </element>
+  -->
+  
 </body></html>
