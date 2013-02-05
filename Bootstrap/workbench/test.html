@@ -34,8 +34,8 @@ license that can be found in the LICENSE file.
   </bp-navbar
   
   <!-- Components -->
-  <link rel="components" src="../../../toolkit/src/g-component.html">
-  <link rel="components" src="../../../toolkit/src/g-selector.html">
+  <link rel="components" src="../../../toolkit/components/g-component.html">
+  <link rel="components" src="../../../toolkit/components/g-selector.html">
   
   <element name="bp-navbar">
     <template>
@@ -126,7 +126,7 @@ license that can be found in the LICENSE file.
     </template>
     <script>
       this.component && this.component({
-        selectedClass: "active",
+        selectedClass: 'active',
         ready: function() {
           this.$super();
           this.node.classList.add('nav');
