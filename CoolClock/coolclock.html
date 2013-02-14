@@ -22,11 +22,13 @@ license that can be found in the LICENSE file.
         var c = document.createElement('canvas');
         c.classList.add('CoolClock:Babosa::noSeconds');
         this.$.clock.appendChild(c);
+        // must be in dom to create clock and we may not be yet, so 
+        // create asynchronousely.
+        this.asyncMethod('createClock');
+      },
+      createClock: function() {
+        CoolClock.findAndCreateClocks();
       }
-    });
-    window.addEventListener("WebComponentsReady", function() {
-      CoolClock.findAndCreateClocks();
-    });
-    
+    });    
   </script>
 </element>
