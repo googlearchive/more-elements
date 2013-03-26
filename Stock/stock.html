@@ -103,10 +103,8 @@ license that can be found in the LICENSE file.
     <g-jsonp id="jsonp" response="{{jsonpResponse}}"></g-jsonp>
   </template>
   <script>
-    this.component({
-      publish: {
-        updateinterval: 60000
-      },
+    this.register({
+      updateinterval: 60000,
       ready: function() {
         var mq = window.matchMedia('(max-width: 400px)');
         mq.addListener(this.layoutChange.bind(this));

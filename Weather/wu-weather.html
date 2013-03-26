@@ -68,10 +68,8 @@ license that can be found in the LICENSE file.
         response="{{forecastResponse}}"></g-jsonp>
   </template>
   <script>
-    this.component({
-      publish: {
-        updateInterval: 60000
-      },
+    this.register({
+      updateInterval: 60000,
       apikey: '6d9e44e91f890cae',
       position: {
         coords: {
