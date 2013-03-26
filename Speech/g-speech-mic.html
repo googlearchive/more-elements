@@ -1,17 +1,16 @@
 <!--
 /*
- * Copyright 2013 The Toolkitchen Authors. All rights reserved.
+ * Copyright 2012 The Toolkitchen Authors. All rights reserved.
  * Use of this source code is governed by a BSD-style
  * license that can be found in the LICENSE file.
  */
 -->
 <element name="g-speech-mic">
+  <link rel="components" href="../../toolkit/components/g-component.html">
   <template>
     <style>
       @host {
-        * {
-          display: inline-block;
-        }
+        display: inline-block;
       }
       
       #mic {
@@ -35,13 +34,13 @@
     <div id="mic" recognizing="{{recognizing}}" on-click="micClick"></div>
   </template>
   <script>
-    Toolkit.register(this, {
-      // public
-      lang: 'en-US',
-      stop: function() {
-        this.recognition && this.recognition.stop();
+    this.component({
+      publish: {
+        lang: 'en-US',
+        stop: function() {
+          this.recognition && this.recognition.stop();
+        }
       },
-      // protected
       ready: function() {
         if (window.webkitSpeechRecognition) {
           this.recognition = new webkitSpeechRecognition();
