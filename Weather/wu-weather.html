@@ -42,13 +42,13 @@ license that can be found in the LICENSE file.
     <h1 class="location">
       {{current.display_location.full}}
     </h1>
-    <template instantiate="current">
+    <template bind="{{current}}">
       <img class="current-icon" src="{{icon_url}}">
       <div class="weather">{{weather}}</div>
       <div class="temperature">{{temperature_string}}</div>
     </template>
     <div class="forecast">
-      <template iterate="forecast.forecastday">
+      <template repeat="{{forecast.forecastday}}">
         <div class="forecast-day">
           <div class="date">{{date.weekday_short}}</div>
           <img class="forecast-icon" src="{{icon_url}}" width="36px" height="36px">
