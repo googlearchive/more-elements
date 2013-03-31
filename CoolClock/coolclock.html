@@ -1,18 +1,17 @@
 <!--
-Copyright 2012 The Toolkitchen Authors. All rights reserved.
+Copyright 2013 The Toolkitchen Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
+<script src="coolclock.js"></script>
+<script src="moreskins.js"></script>
 <element name="x-coolclock">
-  <script src="coolclock.js"></script>
-  <script src="moreskins.js"></script>
-  <link rel="components" href="../../toolkit/components/g-component.html">
   <template>
     <span id="clock">
     </span>
   </template>
   <script>
-    this.component({
+    Toolkit.register(this, {
       ready: function() {
         // TODO(sorvell): create the canvas element manually becase ios 
         // does not render the canvas element if it is not created in the
@@ -27,7 +26,7 @@ license that can be found in the LICENSE file.
         this.asyncMethod('createClock');
       },
       createClock: function() {
-        CoolClock.findAndCreateClocks();
+        CoolClock.findAndCreateClocks(this.$.clock);
       }
     });    
   </script>

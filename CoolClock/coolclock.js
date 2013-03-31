@@ -74,6 +74,7 @@ CoolClock.prototype = {
 	// Initialise using the parameters parsed from the colon delimited class
 	init: function(options) {
 		// Parse and store the options
+	  this.root           = options.root;
 		this.canvasId       = options.canvasId;
 		this.skinId         = options.skinId || CoolClock.config.defaultSkin;
 		this.displayRadius  = options.displayRadius || CoolClock.config.defaultRadius;
@@ -86,7 +87,8 @@ CoolClock.prototype = {
 		this.tickDelay      = CoolClock.config[ this.showSecondHand ? "tickDelay" : "longTickDelay" ];
 
 		// Get the canvas element
-		this.canvas = document.getElementById(this.canvasId);
+		//this.canvas = document.getElementById(this.canvasId);
+		this.canvas = this.findCanvas();
 
 		// Make the canvas the requested size. It's always square.
 		this.canvas.setAttribute("width",this.displayRadius*2);
@@ -274,7 +276,8 @@ CoolClock.prototype = {
 
 	// Check the canvas element hasn't been removed
 	stillHere: function() {
-		return document.getElementById(this.canvasId) != null;
+		//return document.getElementById(this.canvasId) != null;
+		return this.findCanvas() !== null;
 	},
 
 	// Main tick handler. Refresh the clock then setup the next tick
@@ -283,13 +286,18 @@ CoolClock.prototype = {
 			this.refreshDisplay()
 			this.nextTick();
 		}
+	},
+	
+	// find canvas
+	findCanvas: function() {
+	  return (this.root || document).querySelector("[id=" + this.canvasId + "]");
 	}
 };
 
 // Find all canvas elements that have the CoolClock class and turns them into clocks
-CoolClock.findAndCreateClocks = function() {
+CoolClock.findAndCreateClocks = function(root) {
 	// (Let's not use a jQuery selector here so it's easier to use frameworks other than jQuery)
-	var canvases = document.getElementsByTagName("canvas");
+	var canvases = (root || document).getElementsByTagName("canvas");
 	for (var i=0;i<canvases.length;i++) {
 		// Pull out the fields from the class. Example "CoolClock:chunkySwissOnBlack:1000"
 		var fields = canvases[i].className.split(" ")[0].split(":");
@@ -300,6 +308,7 @@ CoolClock.findAndCreateClocks = function() {
 			}
 			// Create a clock object for this element
 			new CoolClock({
+			  root:           root,
 				canvasId:       canvases[i].id,
 				skinId:         fields[1],
 				displayRadius:  fields[2],

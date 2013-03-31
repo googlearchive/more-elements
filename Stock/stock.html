@@ -1,19 +1,12 @@
 <!--
-Copyright 2012 The Toolkitchen Authors. All rights reserved.
+Copyright 2013 The Toolkitchen Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
+<link rel="component" href="../../toolkit/components/g-jsonp.html">
 <element name="x-stock" attributes="symbol autoupdate">
-  <link rel="components" href="../../toolkit/components/g-component.html">
-  <link rel="components" href="../../toolkit/components/g-jsonp.html">
   <template>
     <style>
-      @host {
-        display: inline-block;
-        -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-        padding: 20px;
-      }
-      
       .stock-label {
         font-family: arial,sans-serif;
         font-size: medium;
@@ -103,8 +96,13 @@ license that can be found in the LICENSE file.
     <g-jsonp id="jsonp" response="{{jsonpResponse}}"></g-jsonp>
   </template>
   <script>
-    this.register({
+    Toolkit.register(this, {
+      // public
+      symbol: '',
+      autoupdate: false,
       updateinterval: 60000,
+      // protected
+      jsonpResponse:null,
       ready: function() {
         var mq = window.matchMedia('(max-width: 400px)');
         mq.addListener(this.layoutChange.bind(this));
