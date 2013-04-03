@@ -107,7 +107,11 @@ license that can be found in the LICENSE file.
         var mq = window.matchMedia('(max-width: 400px)');
         mq.addListener(this.layoutChange.bind(this));
         this.layoutChange(mq);
-        this.go();
+      },
+      symbolChanged: function() {
+        if (this.symbol) {
+          this.go();
+        }
       },
       layoutChange: function(inQuery) {
         this.chartWidth = inQuery.matches ? 256 : 327; 
