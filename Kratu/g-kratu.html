@@ -15,6 +15,7 @@ license that can be found in the LICENSE file.
       report: '',
       data: null,
       definition: null,
+      pending: 0,
       ready: function() {
         // Instantiate a new Kratu object
         this.kratu = new Kratu();
@@ -22,37 +23,43 @@ license that can be found in the LICENSE file.
         this.kratu.setRenderElement(this);
       },
       srcChanged: function() {
-        var csvProvider = new KratuCSVProvider();
-        csvProvider.load(this.src, function(data) {
-          this.data = data;
-        }.bind(this));
+        this.dataPending = true;
+        var provider = this.providerForUrl(this.src);
+        if (provider) {
+          provider.load(this.src, function(data) {
+            this.dataPending = false;
+            this.data = data;
+          }.bind(this));
+        }
       },
       reportChanged: function() {
-        this.needsRender = false;
-        var jsonProvider = new KratuJsonProvider();
-        jsonProvider.load(this.report, 
-          function (reportDefinition) {
+        this.definitionPending = true;
+        var provider = this.providerForUrl(this.report);
+        if (provider) {
+          provider.load(this.report, function(reportDefinition) {
             this.definition = reportDefinition;
-          }.bind(this)
-        );
+          }.bind(this));
+        }
+      },
+      providerForUrl: function(inUrl) {
+        var ext = inUrl.split('.').pop();
+        var ctor = {csv: KratuCSVProvider, json: KratuJsonProvider}[ext];
+        return ctor ? new ctor() : null;
       },
       definitionChanged: function() {
-        this.kratu.setReportDefinition(this.definition);
-        this.render();
+        this.definitionPending = true;
+        this.kratu.setReportDefinition(this.definition, function() {
+          this.definitionPending = false;
+          this.render();
+        }.bind(this));
       },
       dataChanged: function() {
         this.kratu.setEntities(this.data);
         this.render();
       },
       render: function() {
-        if (!this.needsRender) {
-          this.needsRender = true;
-          setTimeout(function() {
-            if (this.needsRender) {
-              this.kratu.renderReport();
-              this.needsRender = false;
-            }
-          }.bind(this), 10);
+        if (!this.dataPending && !this.definitionPending) {
+          this.kratu.renderReport();
         }
       }
     });
