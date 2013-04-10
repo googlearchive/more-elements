@@ -38,6 +38,7 @@
     Toolkit.register(this, {
       // public
       lang: 'en-US',
+      transcript: '',
       stop: function() {
         this.recognition && this.recognition.stop();
       },
@@ -74,6 +75,7 @@
           ft = r.isFinal && t;
           at += t;
         }
+        this.transcript = t;
         this.send('result', {results: e.results, transcript: t, 
           finalTranscript: ft, allTranscript: at});
       },
