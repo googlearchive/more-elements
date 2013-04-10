@@ -3,45 +3,56 @@ Copyright 2012 The Toolkitchen Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<element name="ajaxorg-ace" attributes="theme">
-<link rel="components" href="../../toolkit/components/g-component.html">
-<template>
-  <style type="text/css" media="screen">
-    @host {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-    }
-    .ajaxorg-ace {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
-  </style>
-  <div class="ajaxorg-ace" id="editor"></div>
-</template>
 <script src="src-min-noconflict/ace.js"></script>
-<script>
-  this.component({
-    theme: "monokai",
-    ready: function() {
-      var p = this.node.__path__;
-      ace.config.set('basePath', (p ? p + '/' : '') + 'src-min-noconflict/');
-      var editor = ace.edit(this.$.editor);
-      //editor.setTheme('ace/theme/monokai');
-      editor.getSession().setMode('ace/mode/javascript');
-      editor.setValue(this.node.lightDOM.textContent, 1);
-      editor.focus();
-      this.editor = editor;
-      this.themeChanged();
-    },
-    themeChanged: function() {
-      this.editor.setTheme('ace/theme/' + this.theme);
-    }
-  });
-</script>
+<element name="ajaxorg-ace" attributes="theme">
+  <template>
+    <style type="text/css" media="screen">
+      @host {
+        * {
+          display: block;  
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+        }
+      }
+
+      .ajaxorg-ace {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+      }
+    </style>
+    <div class="ajaxorg-ace" id="editor"></div>
+  </template>
+
+  <script>
+    Toolkit.register(this, {
+      theme: "monokai",
+      value: '',
+      ready: function() {
+        // allow styling from the outside world!
+        this.webkitShadowRoot.applyAuthorStyles = true;
+        ace.config.set('basePath', this.resolvePath('src-min-noconflict/'));
+        var editor = ace.edit(this.$.editor);
+        editor.getSession().setMode('ace/mode/javascript');
+        editor.setValue(this.textContent, 1);
+        editor.focus();
+        this.editor = editor;
+        this.themeChanged();
+      },
+      themeChanged: function() {
+        this.editor.setTheme('ace/theme/' + this.theme);
+      },
+      valueChanged: function() {
+        this.editor.setValue(this.value);
+        this.editor.clearSelection();
+        this.editor.resize();
+        this.editor.focus();
+      }
+    });
+  </script>
 </element>
