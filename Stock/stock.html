@@ -97,11 +97,9 @@ license that can be found in the LICENSE file.
   </template>
   <script>
     Toolkit.register(this, {
-      // public
-      symbol: '',
-      autoupdate: false,
-      updateinterval: 60000,
-      // protected
+      publish: {
+        updateinterval: 60000
+      },
       jsonpResponse:null,
       ready: function() {
         var mq = window.matchMedia('(max-width: 400px)');

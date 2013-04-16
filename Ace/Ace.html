@@ -4,7 +4,7 @@ Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
 <script src="src-min-noconflict/ace.js"></script>
-<element name="ajaxorg-ace" attributes="theme">
+<element name="ajaxorg-ace" attributes="theme mode value">
   <template>
     <style type="text/css" media="screen">
       @host {
@@ -31,9 +31,10 @@ license that can be found in the LICENSE file.
 
   <script>
     Toolkit.register(this, {
-      mode: 'javascript',
-      theme: 'monokai',
-      value: '',
+      publish: {
+        mode: 'javascript',
+        theme: 'monokai'
+      },
       ready: function() {
         // allow styling from the outside world!
         this.webkitShadowRoot.applyAuthorStyles = true;
