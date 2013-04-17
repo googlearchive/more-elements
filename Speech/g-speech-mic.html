@@ -36,9 +36,10 @@
   </template>
   <script>
     Toolkit.register(this, {
-      // public
-      lang: 'en-US',
-      transcript: '',
+      publish: {
+        lang: 'en-US',
+        transcript: ''
+      },
       stop: function() {
         this.recognition && this.recognition.stop();
       },
