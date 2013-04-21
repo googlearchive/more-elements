@@ -29,7 +29,6 @@ license that can be found in the LICENSE file.
         //Get the context of the canvas element we want to select
         this.ctx = this.$.chart.getContext('2d');
         this.kind = ['Radar', 'Line', 'Bar'][Math.floor(Math.random()*3)];
-        console.log(this.kind);
       },
       hexToRgb: function(hex) {
         var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
