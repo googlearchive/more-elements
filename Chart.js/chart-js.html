@@ -18,17 +18,20 @@ license that can be found in the LICENSE file.
     <canvas id="chart" width="400" height="400"></canvas> 
   </template>
   <script>
-    var options = {};
     Toolkit.register(this, {
-      color: '#AABBDD',
-      data: '28,48,40,19,96,27,100',
       kind: '',
+      data: null,
+      options: null,
+      ajax: '',
+      color: '#AABBDD',
+      dataString: '28,48,40,19,96,27,100',
       ready: function() {
         this.$.chart.width = Math.max(this.offsetWidth, 300);
         this.$.chart.height = Math.max(this.offsetHeight, 240);
         //Get the context of the canvas element we want to select
         this.ctx = this.$.chart.getContext('2d');
         this.kind = ['Radar', 'Line', 'Bar'][Math.floor(Math.random()*3)];
+        this.dataStringChanged();
       },
       hexToRgb: function(hex) {
         var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -39,13 +42,21 @@ license that can be found in the LICENSE file.
         ] : [0, 0, 0];
       },
       updateChart: function() {
-        var dataPts = this.data.split(',').reduce(
+        var chart = new Chart(this.ctx);
+        var kind = this.kind;
+        if (!chart[kind]) {
+          kind = 'Line';
+        }        
+        this.chart = chart[kind](this.data, this.options);
+      },
+      dataStringChanged: function() {
+        var dataPts = this.dataString.split(',').reduce(
           function(previousValue, currentValue, i, a) {
             previousValue.push(parseFloat(currentValue));
             return previousValue;
           }, []);
         var rgbColor = this.hexToRgb(this.color).join(',');
-        var chartData = {
+        this.data = {
           labels: ['January','February','March','April','May','June','July'],
           datasets: [
             {
@@ -57,21 +68,27 @@ license that can be found in the LICENSE file.
             }
           ]
         };
-        var chart = new Chart(this.ctx);
-        var kind = this.kind;
-        if (!chart[kind]) {
-          kind = 'Line';
-        }        
-        this.chart = chart[kind](chartData, options);
       },
       colorChanged: function() {
-        this.updateChart();
+        this.dataStringChanged();
       },
       dataChanged: function() {
         this.updateChart();
       },
       kindChanged: function() {
         this.updateChart();
+      },
+      ajaxChanged: function() {
+        var p = this;
+        while (p && !p.host) {
+          p = p.parentNode;
+        }
+        if (p && this.ajax) {
+          var c = p.querySelector('#' + this.ajax);
+          if (c && c.response) {
+            this.data = c.response;          
+          }
+        }
       }
     });
   </script>  
