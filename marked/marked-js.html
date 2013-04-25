@@ -1,0 +1,79 @@
+<!--
+Copyright 2013 The Toolkitchen Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<script src="marked.min.js"></script>
+<element name="marked-js">
+  <template>
+    <style>
+      @host {
+        * {
+          position: relative;
+          display: block;
+          width: 484px;
+          height: 300px;
+          border: 1px solid gray;
+        } 
+      }
+      .left {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        width: 240px;
+        bottom: 0px;
+        left: 0;
+        padding: 4px;
+        border: 1px solid silver;
+      }
+      #text {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        display: block;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        resize: none;
+        width: 100%;
+        height: 100%;
+        outline: none;
+      }
+      .right {
+        position: absolute;
+        top: 0;
+        right: 0px;
+        bottom: 0px;
+        left: 242px;
+        border: 1px solid silver;
+      }
+      #output {
+        padding: 4px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        background-color: whitesmoke;
+      }
+    </style>
+    <div class="left" on-keypress="textChanged">
+      <textarea id="text"></textarea>
+    </div>
+    <div id="output" class="right" on-click="textChanged"></div>
+  </template>
+  <script>
+    Toolkit.register(this, {
+      text: '',
+      output: '',
+      ready: function() {
+        this.$.text.value = this.innerHTML;
+        this.textChanged();
+      },
+      textChanged: function() {
+        this.text = this.$.text.value;
+        this.$.output.innerHTML = marked(this.text);  
+      }
+    });
+  </script>
+</element>
+
