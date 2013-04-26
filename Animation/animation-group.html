@@ -1,0 +1,25 @@
+<link rel="import" href="../../toolkit/components/animation/all.html">
+<element name="animation-group" extends="g-animation-group" on-click="clickHandler">
+  <template>
+    <style>
+      @host {
+        * {
+          display: block;
+        }
+      }
+    </style>
+    {{type}} group<br>
+    <content></content>
+  </template>
+  <script>
+    Toolkit.register(this, {
+      publish: {
+        type: 'seq',
+        autoplay: true
+      },
+      clickHandler: function() {
+        this.play();
+      }
+    });
+  </script>
+</element>

@@ -1,0 +1,60 @@
+<link rel="import" href="../../toolkit/components/animation/all.html">
+<element name="animation-picker" extends="g-animation-group" on-click="clickHandler">
+  <template>
+    <style>
+      @host {
+        * {
+          display: block;
+        }
+      }
+      content::-webkit-distributed(.animation) {
+        background-color: darkgrey;
+        color: white;
+        padding: 8px;
+      }
+    </style>
+    {{id}}
+    <content></content>
+  </template>
+  <script>
+    var ANIMATIONS = {
+      blink: 'g-blink',
+      bounce: 'g-bounce',
+      fadein: 'g-fadein',
+      fadeout: 'g-fadeout',
+      flip: 'g-flip',
+      shake: 'g-shake'
+    };
+    Toolkit.register(this, {
+      publish: {
+        animationType: 'shake',
+        autoplay: true
+      },
+      ready: function() {
+        this.super();
+        this.animationTypeChanged();
+      },
+      animationTypeChanged: function() {
+        var animation = this.createAnimation();
+        var target;
+        this.doOnChildren(function(c) {
+          c.cancel();
+          c.remove();
+          target || (target = c.target);
+        });
+        animation.target = target;
+        this.appendChild(animation);
+      },
+      createAnimation: function() {
+        var tag = ANIMATIONS[this.animationType]
+        var animation = document.createElement(tag);
+        animation.textContent = this.animationType;
+        animation.classList.add('animation');
+        return animation;
+      },
+      clickHandler: function() {
+        this.play();
+      }
+    });
+  </script>
+</element>
