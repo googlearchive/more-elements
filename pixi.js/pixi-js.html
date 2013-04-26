@@ -1,0 +1,92 @@
+﻿<!--
+Copyright 2013 The Toolkitchen Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<script src="pixi.js"></script>
+<element name="pixi-js" attributes="count speed">
+  <template>
+    <style>
+      @host {
+        * {
+          background-color: white;
+        }
+      }
+    </style>
+  </template>
+  <script>
+    function rand(r, o) {
+      return (Math.random() + (o||0)) * r;
+    };
+    function irand(r, o) {
+      return Math.floor((Math.random() + (o||0)) * r);
+    };
+    Toolkit.register(this, {
+      count: 40,
+      speed: 1,
+      playing: false,
+      ready: function () {
+        this.prepare();
+        this.animator = this.animate.bind(this);
+        this.playing = true;
+      },
+      prepare: function() {
+        var w = this.offsetWidth, h = this.offsetHeight, cw = Math.floor(w / 2), ch = Math.floor(h / 2);
+        // You can use either PIXI.WebGLRenderer or PIXI.CanvasRenderer
+        var renderer = new PIXI.WebGLRenderer(w, h);
+        this.webkitShadowRoot.appendChild(renderer.view);
+
+        var stage = new PIXI.Stage(0xFFFFFF);
+
+        var texture = PIXI.Texture.fromImage("google_chrome.png");
+
+        var sprites = [];
+        for (var i = 0; i < this.count; i++) {
+          var sprite = new PIXI.Sprite(texture);
+          sprite.position.x = cw + irand(w, -0.5);
+          sprite.position.y = ch + irand(h, -0.5);
+          var scale = rand(0.8) + 0.2;
+          sprite.scale.x = scale;
+          sprite.scale.y = scale;
+          sprite.anchor.x = 0.5;
+          sprite.anchor.y = 0.5;
+          stage.addChild(sprite);
+          sprite.vel = [rand(5, -0.5) * this.speed, rand(5, -0.5) * this.speed, rand(0.05) * this.speed];
+          sprites.push(sprite);
+        }
+        this.sprites = sprites;
+        this.stage = stage;
+        this.renderer = renderer;
+      },
+      playingChanged: function () {
+        if (this.playing) {
+          this.animate();
+        }
+      },
+      animate: function () {
+        var w = this.offsetWidth, h = this.offsetHeight;
+        var overlap = 200;
+        this.sprites.forEach(function (s) {
+          s.position.x += s.vel[0];
+          if (s.position.x > w + overlap) {
+            s.position.x = -overlap;
+          } else if (s.position.x < -overlap) {
+            s.position.x = w + overlap;
+          }
+          s.position.y += s.vel[1];
+          if (s.position.y > h + overlap) {
+            s.position.y = -overlap;
+          } else if (s.position.y < -overlap) {
+            s.position.y = h + overlap;
+          }
+          s.rotation += s.vel[2];
+        });
+        this.renderer.render(this.stage);
+        if (this.playing) {
+          requestAnimationFrame(this.animator);
+        }
+      }
+    });
+  </script>
+</element>
+
