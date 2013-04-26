@@ -4,7 +4,7 @@ Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
 <script src="src-min-noconflict/ace.js"></script>
-<element name="ajaxorg-ace" attributes="theme mode value readonly wrap">
+<element name="ajaxorg-ace" attributes="theme mode value readonly wrap fontSize">
   <template>
     <style type="text/css" media="screen">
       @host {
@@ -39,14 +39,16 @@ license that can be found in the LICENSE file.
         // allow styling from the outside world!
         this.webkitShadowRoot.applyAuthorStyles = true;
         ace.config.set('basePath', this.resolvePath('src-min-noconflict/'));
-        var editor = ace.edit(this.$.editor);
-        editor.setValue(this.textContent, 1);
-        editor.focus();
-        this.editor = editor;
+        this.editor = ace.edit(this.$.editor);
+        this.editor.setValue(this.textContent, 1);
+        this.editor.focus();
         this.modeChanged();
         this.themeChanged();
         this.readonlyChanged();
         this.wrapChanged();
+      },
+      fontSizeChanged: function() {
+        this.$.editor.style.fontSize = this.fontSize;
       },
       modeChanged: function() {
         this.editor.getSession().setMode('ace/mode/' + this.mode);
