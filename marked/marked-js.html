@@ -4,7 +4,7 @@ Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
 <script src="marked.min.js"></script>
-<element name="marked-js" on-click="textChanged">
+<element name="marked-js" attributes="text">
   <template>
     <style>
       @host {
@@ -26,7 +26,8 @@ license that can be found in the LICENSE file.
   <script>
     Toolkit.register(this, {
       text: '',
-      textChanged: function() {
+      textChanged: function () {
+        this.text = this.text.replace(/\\n/g, '\n');
         this.innerHTML = marked(this.text);
       }
     });
