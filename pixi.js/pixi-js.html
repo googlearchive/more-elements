@@ -26,6 +26,9 @@ license that can be found in the LICENSE file.
           this.setup();
         });
       },
+      removedCallback: function () {
+        this.playing = false;
+      },
       countChanged: function () {
         this.playing = false;
         this.asyncMethod(this.setup);
