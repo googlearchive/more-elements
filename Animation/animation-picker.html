@@ -1,5 +1,5 @@
 <link rel="import" href="../../toolkit-ui/elements/animation/all.html">
-<element name="animation-picker" extends="g-animation-group" on-click="clickHandler">
+<element name="animation-picker" on-click="clickHandler">
   <template>
     <style>
       @host {
@@ -14,7 +14,7 @@
       }
     </style>
     <content></content>
-    ({{childNodes.0.target.id}})
+    ({{targetLabel}})
   </template>
   <script>
     var ANIMATIONS = {
@@ -28,22 +28,29 @@
     Toolkit.register(this, {
       publish: {
         animationType: 'shake',
-        autoplay: true
+        client: null,
+        target: null,
+        targetLabel: 'no target'
       },
       ready: function() {
         this.super();
         this.animationTypeChanged();
       },
+      targetChanged: function() {
+        this.client && (this.client.target = this.target);
+        this.targetLabel = this.target ? this.target.id : 'no target';
+      },
       animationTypeChanged: function() {
         var animation = this.createAnimation();
         var target;
-        this.doOnChildren(function(c) {
-          c.cancel();
-          c.remove();
-          target || (target = c.target);
-        });
+        if (this.client) {
+          this.client.cancel();
+          this.client.remove();
+          target || (target = this.client.target);
+        };
         animation.target = target;
         this.appendChild(animation);
+        this.client = animation;
       },
       createAnimation: function() {
         var tag = ANIMATIONS[this.animationType]
@@ -52,8 +59,17 @@
         animation.classList.add('animation');
         return animation;
       },
+      apply: function() {
+        this.client && this.client.apply();
+      },
+      completeApply: function() {
+        this.client && this.client.completeApply();
+      },
       clickHandler: function() {
-        this.play();
+        this.client && this.client.play();
+      },
+      get animation() {
+        return this.client && this.client.animation;
       }
     });
   </script>
