@@ -3,7 +3,7 @@ Copyright 2013 The Toolkitchen Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<element name="yt-video" attributes="videoid">
+<element name="yt-video" attributes="videoId videoEntry">
   <template>
     <style>
       @host {
@@ -16,37 +16,26 @@ license that can be found in the LICENSE file.
     <div id="container"></div>
   </template>
   <script>
-    var ytListeners = [];
-    pollForYoutubeApi = function() {
-      setTimeout(function() {
-        if (!(window.YT && window.YT.Player)) {
-          pollForYoutubeApi();
-        } else {
-          youtubeApiReady();
-        }
-      }, 100);
-    }
-    
-    function youtubeApiReady() {
-      ytListeners.forEach(function(l) {
-        l.videoidChanged();
-      });
-    }
-    
     Toolkit.register(this, {
-      YT_URL: '//www.youtube.com/player_api',
-      videoidChanged: function() {
-        if (this.videoid && this.videoid !== true) {
+      videoId: '',
+      videoEntry: '',
+      videoIdChanged: function() {
+        if (this.videoId && this.videoId !== true) {
           if (this.player) {
-           this.player.loadVideoById(this.videoid);
+           this.player.loadVideoById(this.videoId);
           } else {
            this.createPlayer();
           }
         }
       },
+      videoEntryChanged: function() {
+        if (this.videoEntry && this.videoEntry.media$group) {
+          this.videoId = this.videoEntry.media$group.yt$videoid.$t;
+        }
+      },
       createPlayer: function() {
         if (!window.YT) {
-          this.loadYtApi();
+          loadYtApi(this);
           return;
         }
         this.player = new YT.Player(this.$.container, {
@@ -63,7 +52,7 @@ license that can be found in the LICENSE file.
       },
       playerReady: function(inEvent) {
         this.playerNode.hidden = true;
-        this.player.loadVideoById(this.videoid);
+        this.player.loadVideoById(this.videoId);
         this.player.playVideo();
         // make player iframe fittable to this component.
         this.playerNode.style.position = "absolute";
@@ -75,16 +64,36 @@ license that can be found in the LICENSE file.
       },
       get playerNode() {
         return this.player && this.player.a;
-      },
-      loadYtApi: function() {
-        if (!document.querySelector('[src="' + this.YT_URL + '"]')) {
-          var s = document.createElement('script');
-          s.src = this.YT_URL;
-          document.head.appendChild(s);
-          pollForYoutubeApi();
-        }
-        ytListeners.push(this);
       }
     });
+    
+    var YT_URL = '//www.youtube.com/player_api';
+    var ytListeners = [];
+    
+    function loadYtApi(node) {
+      if (!document.querySelector('[src="' + YT_URL + '"]')) {
+        var s = document.createElement('script');
+        s.src = YT_URL;
+        document.head.appendChild(s);
+        pollForYoutubeApi();
+      }
+      ytListeners.push(node);
+    }
+    
+    function pollForYoutubeApi() {
+      setTimeout(function() {
+        if (!(window.YT && window.YT.Player)) {
+          pollForYoutubeApi();
+        } else {
+          youtubeApiReady();
+        }
+      }, 100);
+    }
+    
+    function youtubeApiReady() {
+      ytListeners.forEach(function(l) {
+        l.videoIdChanged();
+      });
+    }
   </script>
 </element>
