@@ -56,6 +56,7 @@
         var tag = ANIMATIONS[this.animationType]
         var animation = document.createElement(tag);
         animation.textContent = this.animationType;
+        animation.addEventListener('animationchange', this.animationchangeHandler.bind(this));
         animation.classList.add('animation');
         return animation;
       },
@@ -64,6 +65,9 @@
       },
       completeApply: function() {
         this.client && this.client.completeApply();
+      },
+      animationchangeHandler: function() {
+        this.targetLabel = (this.client && this.client.target) ? this.client.target.id : 'no target';
       },
       clickHandler: function() {
         this.client && this.client.play();
