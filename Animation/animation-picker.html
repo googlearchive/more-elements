@@ -56,8 +56,9 @@
         var tag = ANIMATIONS[this.animationType]
         var animation = document.createElement(tag);
         animation.textContent = this.animationType;
-        animation.addEventListener('animationchange', this.animationchangeHandler.bind(this));
         animation.classList.add('animation');
+        animation.addEventListener('animationchange', this.animationchangeHandler.bind(this));
+        animation.addEventListener('click', this.clickHandler.bind(this));
         return animation;
       },
       apply: function() {
