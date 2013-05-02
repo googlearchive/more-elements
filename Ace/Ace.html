@@ -70,6 +70,23 @@ license that can be found in the LICENSE file.
       },
       wrapChanged: function() {
         this.editor.getSession().setUseWrapMode(this.wrap);
+      },
+      foldTag: function(tag) {
+        var s = this.editor.getSession();
+        var pos = this.editor.find('<' + tag, {start: 0});
+        // check if tag found
+        if (!pos) {
+          return;
+        }
+        var start = pos.start.row;
+        // check if can be folded
+        if (s.foldWidgets[start] !== 'start') {
+          return;
+        }
+        // find the fold range
+        var end = s.getFoldWidgetRange(start).end.row;
+        // fold
+        s.foldAll(start, end);
       }
     });
   </script>
