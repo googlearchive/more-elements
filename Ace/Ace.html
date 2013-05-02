@@ -4,7 +4,7 @@ Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
 <script src="src-min-noconflict/ace.js"></script>
-<element name="ajaxorg-ace" attributes="theme mode value readonly wrap fontSize">
+<element name="ajaxorg-ace" attributes="theme mode value readonly wrap fontSize tabSize">
   <template>
     <style type="text/css" media="screen">
       @host {
@@ -46,6 +46,7 @@ license that can be found in the LICENSE file.
         this.themeChanged();
         this.readonlyChanged();
         this.wrapChanged();
+        this.tabSizeChanged();
       },
       fontSizeChanged: function() {
         this.$.editor.style.fontSize = this.fontSize;
@@ -70,6 +71,11 @@ license that can be found in the LICENSE file.
       },
       wrapChanged: function() {
         this.editor.getSession().setUseWrapMode(this.wrap);
+      },
+      tabSizeChanged: function() {
+        if (this.tabSize) {
+          this.editor.getSession().setTabSize(this.tabSize);
+        }
       },
       foldTag: function(tag) {
         var s = this.editor.getSession();
