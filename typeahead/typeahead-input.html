@@ -1,0 +1,122 @@
+<element name="typeahead-input">
+  <template>
+    <style>
+      @host {
+        * {
+          position: relative;
+          display: inline-block;
+          border: 2px inset;
+        }
+      }
+      input {
+        font-size: inherit;
+        width: 100%;
+        border: none;
+        padding 0;
+        background-color: transparent;
+      }
+      input:focus {
+        outline: none;
+      }
+      input#hint {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0.7;
+      }
+      input#input {
+        position: relative;
+      }
+      span#measure {
+        position: absolute;
+        top: -9999px;
+        width: auto;
+        font: -webkit-small-control;
+        font-size: inherit;
+      }
+    </style>
+    <span id="measure">{{input}}</span>
+    <input id="hint" type="text" disabled value="{{hint}}">
+    <input id="input" type="text" on-input="inputHandler" on-keydown="keydownHandler" on-click="clickHandler">
+  </template>
+  <script>
+    Toolkit.register(this, {
+      publish: {
+        values: [],
+        delimiter: '.',
+        enabled: false,
+        hint: '',
+        input: '',
+        committed: '',
+        query: ''
+      },
+      valuesChanged: function() {
+        this.values.sort();
+      },
+      enabledChanged: function() {
+        if (!this.enabled) {
+          this.hint = this.committed = '';
+       }
+      },
+      inputChanged: function(old) {
+        this.enabled = this.input.length > old.length && (this.input.indexOf(old) === 0) && this.$.measure.offsetWidth < this.$.input.offsetWidth;
+        if (!this.enabled) {
+          return;
+        }
+        if (this.delimiter) {
+          var delimiterIndex = this.input.lastIndexOf(this.delimiter);
+          if (delimiterIndex + this.delimiter.length === this.input.length) {
+            this.getMoreValues();
+          }
+          this.query = this.input.slice(delimiterIndex + 1);
+          this.committed = this.input.slice(0, delimiterIndex + 1);
+        } else {
+          this.query = this.input;
+          this.committed = '';
+        }
+      },
+      getMoreValues: function() {
+        var details = {
+          value: this.input.slice(0, -this.delimiter.length)
+        };
+        this.send('typeahead-delimiter', details);
+        this.values = details.values || [];
+      },
+      queryChanged: function() {
+        if (!this.query) {
+          return;
+        }
+        var hint = '';
+        for (var i = 0, d; d = this.values[i]; i++) {
+          if (d.indexOf(this.query) === 0) {
+            hint = d;
+            break;
+          }
+        }
+        this.hint = hint ? this.committed + hint : this.committed + this.query;
+      },
+      inputHandler: function(e) {
+        this.input = this.$.input.value;
+      },
+      keydownHandler: function(e) {
+        switch (e.keyCode) {
+          case 13: // enter
+          case 39: // right arrow
+            this.hint && (this.$.input.value = this.hint);
+            break;
+          case 8: // backspace
+          case 27: // esc
+          case 37: // left arrow
+            this.enabled = false;
+            break;
+          default:
+            break;
+        }
+      },
+      clickHandler: function() {
+        this.enabled = false;
+      }
+    });
+  </script>
+</element>
