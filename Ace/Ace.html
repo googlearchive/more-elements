@@ -34,6 +34,7 @@ license that can be found in the LICENSE file.
       mode: 'javascript',
       theme: 'monokai',
       readonly: false,
+      value: null,
       wrap: false,
       ready: function() {
         // allow styling from the outside world!
@@ -47,6 +48,7 @@ license that can be found in the LICENSE file.
         this.readonlyChanged();
         this.wrapChanged();
         this.tabSizeChanged();
+        this.editor.on("blur", this.editorBlur.bind(this));
       },
       fontSizeChanged: function() {
         this.$.editor.style.fontSize = this.fontSize;
@@ -58,10 +60,10 @@ license that can be found in the LICENSE file.
         this.editor.setTheme('ace/theme/' + this.theme);
       },
       valueChanged: function() {
-        this.editor.setValue(this.value);
+        this.editorValue = this.value;
         this.editor.clearSelection();
         this.editor.resize();
-        this.editor.focus();
+        //this.editor.focus();
       },
       readonlyChanged: function() {
         this.editor.setReadOnly(this.readonly);
@@ -93,6 +95,21 @@ license that can be found in the LICENSE file.
         var end = s.getFoldWidgetRange(start).end.row;
         // fold
         s.foldAll(start, end);
+      },
+      editorBlur: function(event) {
+        if (this.value !== null && this.value != this.editorValue) {
+          this.send('editor-change', {value: this.editorValue, oldValue: this.value});
+        }
+        this.value = this.editor.getValue();
+      },
+      get editorValue() {
+        return this.editor.getValue();
+      },
+      set editorValue(value) {
+        this.editor.setValue(value);
+      },
+      focus: function() {
+        this.editor.focus();
       }
     });
   </script>
