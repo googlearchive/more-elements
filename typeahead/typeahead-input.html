@@ -48,7 +48,7 @@
         enabled: false,
         hint: '',
         input: '',
-        committed: '',
+        base: '',
         query: ''
       },
       valuesChanged: function() {
@@ -56,45 +56,43 @@
       },
       enabledChanged: function() {
         if (!this.enabled) {
-          this.hint = this.committed = '';
+          this.hint = '';
        }
       },
       inputChanged: function(old) {
         this.enabled = this.input.length > old.length && (this.input.indexOf(old) === 0) && this.$.measure.offsetWidth < this.$.input.offsetWidth;
-        if (!this.enabled) {
-          return;
-        }
         if (this.delimiter) {
           var delimiterIndex = this.input.lastIndexOf(this.delimiter);
-          if (delimiterIndex + this.delimiter.length === this.input.length) {
-            this.getMoreValues();
-          }
+          var base = this.input.slice(0, Math.max(0, delimiterIndex));
+          this.updateValues(base);
           this.query = this.input.slice(delimiterIndex + 1);
-          this.committed = this.input.slice(0, delimiterIndex + 1);
         } else {
           this.query = this.input;
-          this.committed = '';
         }
       },
-      getMoreValues: function() {
+      updateValues: function(base) {
+        if (base === this.base) {
+          return;
+        }
         var details = {
-          value: this.input.slice(0, -this.delimiter.length)
+          query: base
         };
         this.send('typeahead-delimiter', details);
         this.values = details.values || [];
+        this.base = base;
       },
       queryChanged: function() {
-        if (!this.query) {
+        if (!this.enabled || !this.query) {
           return;
         }
-        var hint = '';
+        var hint = this.query;
         for (var i = 0, d; d = this.values[i]; i++) {
           if (d.indexOf(this.query) === 0) {
             hint = d;
             break;
           }
         }
-        this.hint = hint ? this.committed + hint : this.committed + this.query;
+        this.hint = (this.base ? this.base + this.delimiter : '') + hint;
       },
       inputHandler: function(e) {
         this.input = this.$.input.value;
