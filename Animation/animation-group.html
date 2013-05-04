@@ -7,18 +7,23 @@
           display: block;
         }
       }
+      span {
+        background-color: darkgrey;
+        color: white;
+        padding: 8px;
+      }
     </style>
-    {{type}} group<br>
+    <span>{{type}} group</span><br>
     <content></content>
   </template>
   <script>
     Toolkit.register(this, {
       publish: {
-        type: 'seq',
-        autoplay: true
+        type: 'seq'
       },
       clickHandler: function() {
-        this.play();
+        this.asyncApply();
+        setTimeout(this.play.bind(this));
       }
     });
   </script>
