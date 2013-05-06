@@ -78,7 +78,6 @@
       clickHandler: function(e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log(this.client, 'parent', this.parentNode);
         if (this.parentNode && !this.parentNode.apply && this.client) {
           setTimeout(this.client.play.bind(this.client));
         }
