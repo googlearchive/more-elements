@@ -81,7 +81,7 @@ license that can be found in the LICENSE file.
       },
       foldTag: function(tag) {
         var s = this.editor.getSession();
-        var pos = this.editor.find('<' + tag, {start: 0});
+        var pos = this.find('<' + tag, {start: 0});
         // check if tag found
         if (!pos) {
           return;
@@ -95,6 +95,12 @@ license that can be found in the LICENSE file.
         var end = s.getFoldWidgetRange(start).end.row;
         // fold
         s.foldAll(start, end);
+      },
+      find: function() {
+        return this.editor.find.apply(this.editor, arguments);
+      },
+      gotoLine: function() {
+        this.editor.gotoLine.apply(this.editor, arguments);
       },
       editorBlur: function(event) {
         if (this.value !== null && this.value != this.editorValue) {
