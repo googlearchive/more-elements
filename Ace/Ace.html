@@ -81,6 +81,9 @@ license that can be found in the LICENSE file.
       },
       foldTag: function(tag) {
         var s = this.editor.getSession();
+        if (!s.foldWidgets) {
+          return
+        }
         var pos = this.find('<' + tag, {start: 0});
         // check if tag found
         if (!pos) {
