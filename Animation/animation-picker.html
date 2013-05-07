@@ -1,5 +1,6 @@
 <link rel="import" href="../../toolkit-ui/elements/animation/all.html">
 <element name="animation-picker" on-click="clickHandler">
+  <link rel="stylesheet" href="../../toolkit-ui/elements/css/g-flex-layout.css">
   <template>
     <style>
       @host {
@@ -7,14 +8,24 @@
           display: block;
         }
       }
-      span {
+      .animationType {
         background-color: darkgrey;
         color: white;
         padding: 8px;
       }
+      .flexbox {
+        margin-left: 8px;
+      }
+      content::-webkit-distributed(*) {
+        text-align: right;
+        padding: 0 8px;
+        min-width: 35px;
+      }
     </style>
-    <span>{{animationType}}</span>
-    <content></content>
+    <div class="flexbox align-center">
+      <div class="animationType">{{animationType}}</div>
+      <content flex></content>
+    </div>
   </template>
   <script>
     var ANIMATIONS = {
