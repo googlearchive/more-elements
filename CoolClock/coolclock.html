@@ -5,31 +5,33 @@ license that can be found in the LICENSE file.
 -->
 <script src="coolclock.js"></script>
 <script src="moreskins.js"></script>
-<element name="x-coolclock">
+<element name="x-coolclock" attributes="skin">
   <template>
-    <span id="clock">
-    </span>
+    <span id="clock"></span>
   </template>
   <script>
     Toolkit.register(this, {
-      skin: 'Babosa',
+      skin: '', //'Babosa',
       ready: function() {
-        var skins = Object.keys(CoolClock.config.skins);
-        var i = Math.floor(Math.random() * skins.length);
-        this.skin = skins[i];
         // TODO(sorvell): create the canvas element manually becase ios 
         // does not render the canvas element if it is not created in the
         // main document (component templates are created in a 
         // different document). See:
         // https://bugs.webkit.org/show_bug.cgi?id=109073.
-        var c = document.createElement('canvas');
-        c.classList.add('CoolClock:' + this.skin);
-        this.$.clock.appendChild(c);
-        // must be in dom to create clock and we may not be yet, so 
-        // create asynchronousely.
-        this.asyncMethod('createClock');
+        this.canvas = document.createElement('canvas');
+        this.$.clock.appendChild(this.canvas);
+        // if not specified, choose a random skin
+        if (!this.skin) {
+          var skins = Object.keys(CoolClock.config.skins);
+          var i = Math.floor(Math.random() * skins.length);
+          this.skin = skins[i];
+        }
+        Platform.flush();
       },
-      createClock: function() {
+      skinChanged: function() {
+        this.canvas.className = 'CoolClock:' + this.skin;
+      },
+      insertedCallback: function() {
         CoolClock.findAndCreateClocks(this.$.clock);
       }
     });    
