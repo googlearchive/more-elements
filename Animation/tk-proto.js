@@ -8,8 +8,12 @@ var tkAnimationProto = function(name) {
       this.super(),
       this.targetLabel = this.target ? this.target.id : '(no target)';
     },
-    clickHandler: function() {
-      setTimeout(this.play.bind(this), 500);
+    clickHandler: function(e) {
+      if (!this.parentNode.apply) {
+        setTimeout(this.play.bind(this), 500);
+      }
+      e.stopPropagation();
+      e.preventDefault();
     }
   };
 };
