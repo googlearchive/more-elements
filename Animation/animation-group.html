@@ -7,13 +7,16 @@
           display: block;
         }
       }
+      /*@polyfill #container > * */
       content::-webkit-distributed(*) {
         display: block;
         padding-left: 8px;
       }
     </style>
     <span>{{type}} group</span><br>
-    <content></content>
+    <div id="container">
+      <content></content>
+    </div>
   </template>
   <script>
     Toolkit.register(this, {
