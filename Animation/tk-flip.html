@@ -1,0 +1,21 @@
+<link rel="import" href="../../toolkit-ui/elements/animation/g-flip.html">
+<element name="tk-flip" extends="g-flip" on-click="clickHandler">
+  <template>
+    {{animationName}}:{{targetLabel}}
+  </template>
+  <script>
+    Toolkit.register(this, {
+      publish: {
+        animationName: 'flip',
+        targetLabel: '(no target)'
+      },
+      targetChanged: function() {
+        this.super();
+        this.targetLabel = this.target ? this.target.id : '(no target)';
+      },
+      clickHandler: function() {
+        this.play();
+      }
+    });
+  </script>
+</element>
