@@ -1,21 +1,18 @@
 <link rel="import" href="../../toolkit-ui/elements/animation/g-bounce.html">
+<script src="tk-proto.js"></script>
 <element name="tk-bounce" extends="g-bounce" on-click="clickHandler">
   <template>
+    <style>
+      @host {
+        * {
+          padding: 8px;
+          border: 1px dotted silver;
+        }
+      }
+    </style>
     {{animationName}}:{{targetLabel}}
   </template>
   <script>
-    Toolkit.register(this, {
-      publish: {
-        animationName: 'bounce',
-        targetLabel: '(no target)'
-      },
-      targetChanged: function() {
-        this.super();
-        this.targetLabel = this.target ? this.target.id : '(no target)';
-      },
-      clickHandler: function() {
-        this.play();
-      }
-    });
+    Toolkit.register(this, tkAnimationProto('bounce'));
   </script>
 </element>

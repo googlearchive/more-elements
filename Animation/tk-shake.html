@@ -1,6 +1,15 @@
 <link rel="import" href="../../toolkit-ui/elements/animation/g-shake.html">
+<script src="tk-proto.js"></script>
 <element name="tk-shake" extends="g-shake" on-click="clickHandler">
   <template>
+    <style>
+      @host {
+        * {
+          padding: 8px;
+          border: 1px dotted silver;
+        }
+      }
+    </style>
     <g-animation duration="{{period}}">
       <g-property name="transform">
         <g-keyframe value="translateX(0px)"></g-keyframe>
@@ -23,18 +32,6 @@
     {{animationName}}:{{targetLabel}}
   </template>
   <script>
-    Toolkit.register(this, {
-      publish: {
-        animationName: 'shake',
-        targetLabel: '(no target)'
-      },
-      targetChanged: function() {
-        this.super();
-        this.targetLabel = this.target ? this.target.id : '(no target)';
-      },
-      clickHandler: function() {
-        this.play();
-      }
-    });
+    Toolkit.register(this, tkAnimationProto('shake'));
   </script>
 </element>

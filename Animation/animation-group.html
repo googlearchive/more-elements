@@ -21,8 +21,16 @@
         type: 'seq'
       },
       clickHandler: function() {
+        var timeout = 0;
+        this.doOnChildren(function(c) {
+          if (c.targetSelector && !c.target) {
+            timeout = 500;
+            c.targetSelectorChanged();
+          }
+        });
         this.asyncApply();
-        setTimeout(this.play.bind(this));
+        window.dirtyCheck();
+        setTimeout(this.play.bind(this), timeout);
       }
     });
   </script>
