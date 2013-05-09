@@ -1,0 +1,18 @@
+<link rel="import" href="../../toolkit-ui/elements/animation/g-flip.html">
+<script src="tk-proto.js"></script>
+<element name="tk-flip" extends="g-flip" on-click="clickHandler">
+  <template>
+    <style>
+      @host {
+        * {
+          padding: 8px;
+          border: 1px dotted silver;
+        }
+      }
+    </style>
+    {{animationName}}:{{targetLabel}}
+  </template>
+  <script>
+    Toolkit.register(this, tkAnimationProto('flip'));
+  </script>
+</element>
