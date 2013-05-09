@@ -1,0 +1,29 @@
+<!--
+/*
+ * Copyright 2013 The Toolkitchen Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style
+ * license that can be found in the LICENSE file.
+ */
+-->
+<link rel="import" href="speech-mic.html">
+<element name="speech-transcript" attributes="transcript">
+  <template>
+    <style>
+      @host {
+        * {
+          display: block;
+          overflow: auto;
+        }
+      }
+    </style>
+      
+    <speech-mic completeTranscript="{{transcript}}"></speech-mic>
+    <div>{{transcript}}</div>
+  </template>
+  <script>
+    Toolkit.register(this, {
+      transcript: ''
+    });
+  </script>
+</element>
+

@@ -1,0 +1,18 @@
+<link rel="import" href="../../toolkit-ui/elements/animation/g-blink.html">
+<script src="tk-proto.js"></script>
+<element name="tk-blink" extends="g-blink" on-click="clickHandler">
+  <template>
+    <style>
+      @host {
+        * {
+          padding: 8px;
+          border: 1px dotted silver;
+        }
+      }
+    </style>
+    {{animationName}}:{{targetLabel}}
+  </template>
+  <script>
+    Toolkit.register(this, tkAnimationProto('blink'));
+  </script>
+</element>

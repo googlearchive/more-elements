@@ -5,7 +5,7 @@
  * license that can be found in the LICENSE file.
  */
 -->
-<element name="g-speech-mic">
+<element name="speech-mic">
   <template>
     <style>
       @host {
@@ -38,12 +38,12 @@
     Toolkit.register(this, {
       publish: {
         lang: 'en-US',
-        transcript: ''
+        transcript: '',
+        completeTranscript: ''
       },
       stop: function() {
         this.recognition && this.recognition.stop();
       },
-      // protected
       ready: function() {
         if (window.webkitSpeechRecognition) {
           this.recognition = new webkitSpeechRecognition();
@@ -70,15 +70,16 @@
         this.recognizing = true;
       },
       result: function(e) {
-        var t, ft = '', at = '';
+        var t, ft = '', ct = '';
         for (var i = 0, r; r = e.results[i]; i++) {
           t = r[0] && r[0].transcript || '';
           ft = r.isFinal && t;
-          at += t;
+          ct += t;
         }
         this.transcript = t;
+        this.completeTranscript = ct;
         this.send('result', {results: e.results, transcript: t, 
-          finalTranscript: ft, allTranscript: at});
+          finalTranscript: ft, completeTranscript: ct});
       },
       error: function(e) {
       },

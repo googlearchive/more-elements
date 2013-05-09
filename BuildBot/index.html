@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Buildbot: Toolkit</title>
+    <link rel="import" href="tk-buildbot.html">
+    <script src="../../toolkit/toolkit.min.js"></script>
+  </head>
+  <body>
+    <buildbot-toolkit></buildbot-toolkit>
+    <element name="buildbot-toolkit">
+      <template>
+        <template repeat="{{builders}}">
+          <p><tk-buildbot builder="{{name}}" inactive="{{inactive}}"></tk-buildbot></p>
+        </template>
+      </template>
+      <script>
+        Toolkit.register(this, {
+          publish: {
+            builders: [],
+            platforms: ['Mac', 'Linux', 'Win'],
+            projects: [
+              'toolkit',
+              'platform',
+              'CustomElements',
+              'mdv',
+              'PointerGestures',
+              'ShadowDOM',
+              'HTMLImports'
+            ]
+          },
+          ready: function() {
+            this.generateBuilders();
+          },
+          generateBuilders: function() {
+            var platforms = this.platforms;
+            var builders = [];
+            this.projects.forEach(function(project) {
+              platforms.forEach(function(platform) {
+                builders.push({
+                  name: project + ' ' + platform,
+                  inactive: platform === 'Win'
+                });
+              });
+            });
+            this.builders = builders;
+          }
+        });
+      </script>
+    </element>
+  </body>
+</html>

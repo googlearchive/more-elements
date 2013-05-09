@@ -4,7 +4,7 @@ Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
 <script src="src-min-noconflict/ace.js"></script>
-<element name="ajaxorg-ace" attributes="theme mode value">
+<element name="ajaxorg-ace" attributes="theme mode value readonly wrap fontSize tabSize">
   <template>
     <style type="text/css" media="screen">
       @host {
@@ -31,20 +31,27 @@ license that can be found in the LICENSE file.
 
   <script>
     Toolkit.register(this, {
-      publish: {
-        mode: 'javascript',
-        theme: 'monokai'
-      },
+      mode: 'javascript',
+      theme: 'monokai',
+      readonly: false,
+      value: null,
+      wrap: false,
       ready: function() {
         // allow styling from the outside world!
         this.webkitShadowRoot.applyAuthorStyles = true;
         ace.config.set('basePath', this.resolvePath('src-min-noconflict/'));
-        var editor = ace.edit(this.$.editor);
-        editor.setValue(this.textContent, 1);
-        editor.focus();
-        this.editor = editor;
+        this.editor = ace.edit(this.$.editor);
+        this.editor.setValue(this.textContent, 1);
+        this.editor.focus();
         this.modeChanged();
         this.themeChanged();
+        this.readonlyChanged();
+        this.wrapChanged();
+        this.tabSizeChanged();
+        this.editor.on("blur", this.editorBlur.bind(this));
+      },
+      fontSizeChanged: function() {
+        this.$.editor.style.fontSize = this.fontSize;
       },
       modeChanged: function() {
         this.editor.getSession().setMode('ace/mode/' + this.mode);
@@ -53,9 +60,64 @@ license that can be found in the LICENSE file.
         this.editor.setTheme('ace/theme/' + this.theme);
       },
       valueChanged: function() {
-        this.editor.setValue(this.value);
+        this.editorValue = this.value;
         this.editor.clearSelection();
         this.editor.resize();
+        //this.editor.focus();
+      },
+      readonlyChanged: function() {
+        this.editor.setReadOnly(this.readonly);
+        this.editor.setHighlightActiveLine(!this.readonly);
+        this.editor.setHighlightGutterLine(!this.readonly);
+        this.editor.renderer.$cursorLayer.element.style.opacity = this.readonly ? 0 : 1;
+      },
+      wrapChanged: function() {
+        this.editor.getSession().setUseWrapMode(this.wrap);
+      },
+      tabSizeChanged: function() {
+        if (this.tabSize) {
+          this.editor.getSession().setTabSize(this.tabSize);
+        }
+      },
+      foldTag: function(tag) {
+        var s = this.editor.getSession();
+        if (!s.foldWidgets) {
+          return
+        }
+        var pos = this.find('<' + tag, {start: 0});
+        // check if tag found
+        if (!pos) {
+          return;
+        }
+        var start = pos.start.row;
+        // check if can be folded
+        if (s.foldWidgets[start] !== 'start') {
+          return;
+        }
+        // find the fold range
+        var end = s.getFoldWidgetRange(start).end.row;
+        // fold
+        s.foldAll(start, end);
+      },
+      find: function() {
+        return this.editor.find.apply(this.editor, arguments);
+      },
+      gotoLine: function() {
+        this.editor.gotoLine.apply(this.editor, arguments);
+      },
+      editorBlur: function(event) {
+        if (this.value !== null && this.value != this.editorValue) {
+          this.send('editor-change', {value: this.editorValue, oldValue: this.value});
+        }
+        this.value = this.editor.getValue();
+      },
+      get editorValue() {
+        return this.editor.getValue();
+      },
+      set editorValue(value) {
+        this.editor.setValue(value);
+      },
+      focus: function() {
         this.editor.focus();
       }
     });
