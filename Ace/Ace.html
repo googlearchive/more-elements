@@ -41,7 +41,6 @@ license that can be found in the LICENSE file.
         this.webkitShadowRoot.applyAuthorStyles = true;
         ace.config.set('basePath', this.resolvePath('src-min-noconflict/'));
         this.editor = ace.edit(this.$.editor);
-        this.editor.setValue(this.textContent, 1);
         this.editor.focus();
         this.modeChanged();
         this.themeChanged();
@@ -49,6 +48,7 @@ license that can be found in the LICENSE file.
         this.wrapChanged();
         this.tabSizeChanged();
         this.editor.on("blur", this.editorBlur.bind(this));
+        this.value = this.textContent;
       },
       fontSizeChanged: function() {
         this.$.editor.style.fontSize = this.fontSize;
@@ -90,31 +90,34 @@ license that can be found in the LICENSE file.
           return;
         }
         var start = pos.start.row;
-        // check if can be folded
-        if (s.foldWidgets[start] !== 'start') {
-          return;
-        }
         // find the fold range
-        var end = s.getFoldWidgetRange(start).end.row;
-        // fold
-        s.foldAll(start, end);
+        var range = s.getFoldWidgetRange(start);
+        // check if can be folded
+        if (range) {
+          var end = range.end.row;
+          // fold
+          s.foldAll(start, end);
+        }
       },
       find: function() {
         return this.editor.find.apply(this.editor, arguments);
       },
       gotoLine: function() {
         this.editor.gotoLine.apply(this.editor, arguments);
+        this.editor.getSession().selection.moveCursorLineStart();
+        this.editor.clearSelection();
       },
       editorBlur: function(event) {
-        if (this.value !== null && this.value != this.editorValue) {
-          this.send('editor-change', {value: this.editorValue, oldValue: this.value});
+        if (this._value !== null && this._value != this.editorValue) {
+          this.send('editor-change', {value: this.editorValue, oldValue: this._value});
         }
-        this.value = this.editor.getValue();
+        this._value = this.editorValue;
       },
       get editorValue() {
         return this.editor.getValue();
       },
       set editorValue(value) {
+        this._value = value;
         this.editor.setValue(value);
       },
       focus: function() {
