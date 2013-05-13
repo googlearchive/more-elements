@@ -22,15 +22,15 @@ license that can be found in the LICENSE file.
            border: 1px solid black;
          }
       }
-      #label {
+      #pdfLabel {
         color: white;
         padding: 4px;
         font-weight: bold;
       }
     </style>
-    <span id="label">{{label}}</span><button on-click="prev">Prev</button><button on-click="next">Next</button>
+    <span id="pdfLabel">{{label}}</span><button on-click="prev">Prev</button><button on-click="next">Next</button>
     <br/>
-    <canvas id="canvas" style="border:1px solid gray; background-color: white;"/>
+    <canvas id="pdfCanvas" style="border:1px solid gray; background-color: white;"/>
   </template>
   <script>
     Toolkit.register(this, {
@@ -67,7 +67,7 @@ license that can be found in the LICENSE file.
         if (!this.pdf) {
           return;
         }
-        var canvas = this.$.canvas;
+        var canvas = this.$.pdfCanvas;
         var scale = this.scale;
         // Using promise to fetch the page
         this.pdf.getPage(this.page).then(function(page) {
