@@ -16,7 +16,7 @@ license that can be found in the LICENSE file.
       }
     </style>
     <yt-search id="search" maxResults="{{maxResults}}" list="{{list}}"></yt-search>
-    <yt-video videoEntry="{{video}}"></yt-video>
+    <yt-video id="video" videoEntry="{{video}}"></yt-video>
   </template>
   <script>
     Toolkit.register(this, {
@@ -25,7 +25,11 @@ license that can be found in the LICENSE file.
       maxResults: 50,
       ImFeelingLuckyChanged: function() {
         if (this.ImFeelingLucky && typeof this.ImFeelingLucky === 'string') {
+          this.$.video.style.display = '';
           this.$.search.query = this.ImFeelingLucky;
+        } else if (this.$.video.player) {
+          this.$.video.player.stopVideo();
+          this.$.video.style.display = 'none';
         }
       },
       listChanged: function() {
