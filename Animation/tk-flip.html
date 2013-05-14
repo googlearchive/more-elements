@@ -5,14 +5,17 @@
     <style>
       @host {
         * {
-          padding: 8px;
-          border: 1px dotted silver;
+          background-color: #e0e0e0;
+          border: 1px solid silver;
+          border-radius: 3px;
+          padding: 5px 10px;
+          margin: 5px;
         }
       }
     </style>
     {{animationName}}:{{targetLabel}}
   </template>
   <script>
-    Toolkit.register(this, tkAnimationProto('flip'));
+    Polymer.register(this, tkAnimationProto('flip'));
   </script>
 </element>

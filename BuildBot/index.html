@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Buildbot: Toolkit</title>
+    <title>Buildbot: Polymer</title>
     <link rel="import" href="tk-buildbot.html">
-    <script src="../../toolkit/toolkit.min.js"></script>
+    <script src="../../polymer/polymer.min.js"></script>
   </head>
   <body>
-    <buildbot-toolkit></buildbot-toolkit>
-    <element name="buildbot-toolkit">
+    <buildbot-polymer></buildbot-polymer>
+    <element name="buildbot-polymer">
       <template>
         <template repeat="{{builders}}">
           <p><tk-buildbot builder="{{name}}" inactive="{{inactive}}"></tk-buildbot></p>
         </template>
       </template>
       <script>
-        Toolkit.register(this, {
+        Polymer.register(this, {
           publish: {
             builders: [],
             platforms: ['Mac', 'Linux', 'Win'],
             projects: [
-              'toolkit',
+              'polymer',
               'platform',
               'CustomElements',
               'mdv',

@@ -1,5 +1,5 @@
 <!--
-Copyright 2013 The Toolkitchen Authors. All rights reserved.
+Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
@@ -16,7 +16,7 @@ license that can be found in the LICENSE file.
     <div id="container"></div>
   </template>
   <script>
-    Toolkit.register(this, {
+    Polymer.register(this, {
       videoId: '',
       videoEntry: '',
       videoIdChanged: function() {
@@ -64,6 +64,12 @@ license that can be found in the LICENSE file.
       },
       get playerNode() {
         return this.player && this.player.a;
+      },
+      clearVideo: function() {
+        if (this.player) {
+          this.player.stopVideo();
+          this.playerNode.hidden = true;
+        }
       }
     });
     
