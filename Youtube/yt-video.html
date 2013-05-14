@@ -64,6 +64,12 @@ license that can be found in the LICENSE file.
       },
       get playerNode() {
         return this.player && this.player.a;
+      },
+      clearVideo: function() {
+        if (this.player) {
+          this.player.stopVideo();
+          this.playerNode.hidden = true;
+        }
       }
     });
     

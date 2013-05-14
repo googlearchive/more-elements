@@ -24,19 +24,22 @@ license that can be found in the LICENSE file.
       index: 0,
       maxResults: 50,
       ImFeelingLuckyChanged: function() {
-        if (this.ImFeelingLucky && typeof this.ImFeelingLucky === 'string') {
-          this.$.video.style.display = '';
+        if (this.isValidQuery()) {
           this.$.search.query = this.ImFeelingLucky;
-        } else if (this.$.video.player) {
-          this.$.video.player.stopVideo();
-          this.$.video.style.display = 'none';
+        } else {
+          this.$.video.clearVideo();
         }
+      },
+      isValidQuery: function() {
+        return this.ImFeelingLucky && typeof this.ImFeelingLucky === 'string';
       },
       listChanged: function() {
         this.indexChanged();
       },
       indexChanged: function() {
-        this.video = this.list && this.list[this.index];
+        if (this.isValidQuery()) {
+          this.video = this.list && this.list[this.index];
+        }
       }
     });
   </script>
