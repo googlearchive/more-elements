@@ -86,14 +86,14 @@
     </div>
   </template>
   <script>
-    Toolkit.register(this, {
+    Polymer.register(this, {
       publish: {
         details: false,
         builder: null,
         inactive: false,
         browsers: null
       },
-      url: 'http://build.chromium.org/p/client.toolkit',
+      url: 'http://build.chromium.org/p/client.polymer',
       detailsChanged: function() {
         this.$.details.classList.toggle('visible', this.details);
       },
