@@ -1,5 +1,5 @@
 <!--
-Copyright 2013 The Toolkitchen Authors. All rights reserved.
+Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
@@ -15,19 +15,31 @@ license that can be found in the LICENSE file.
         }
       }
     </style>
-    <yt-search query="{{ImFeelingLucky}}" maxResults="{{maxResults}}" list="{{list}}"></yt-search>
-    <yt-video videoEntry="{{video}}"></yt-video>
+    <yt-search id="search" maxResults="{{maxResults}}" list="{{list}}"></yt-search>
+    <yt-video id="video" videoEntry="{{video}}"></yt-video>
   </template>
   <script>
-    Toolkit.register(this, {
+    Polymer.register(this, {
       ImFeelingLucky: '',
       index: 0,
       maxResults: 50,
+      ImFeelingLuckyChanged: function() {
+        if (this.isValidQuery()) {
+          this.$.search.query = this.ImFeelingLucky;
+        } else {
+          this.$.video.clearVideo();
+        }
+      },
+      isValidQuery: function() {
+        return this.ImFeelingLucky && typeof this.ImFeelingLucky === 'string';
+      },
       listChanged: function() {
         this.indexChanged();
       },
       indexChanged: function() {
-        this.video = this.list && this.list[this.index];
+        if (this.isValidQuery()) {
+          this.video = this.list && this.list[this.index];
+        }
       }
     });
   </script>
