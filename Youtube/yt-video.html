@@ -3,7 +3,7 @@ Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<element name="yt-video" attributes="videoId videoEntry">
+<element name="yt-video" attributes="videoId videoEntry muted">
   <template>
     <style>
       @host {
@@ -19,6 +19,7 @@ license that can be found in the LICENSE file.
     Polymer.register(this, {
       videoId: '',
       videoEntry: '',
+      muted: false,
       videoIdChanged: function() {
         if (this.videoId && this.videoId !== true) {
           if (this.player) {
@@ -54,6 +55,9 @@ license that can be found in the LICENSE file.
         this.playerNode.hidden = true;
         this.player.loadVideoById(this.videoId);
         this.player.playVideo();
+        if (this.muted) {
+          this.player.mute();
+        }
         // make player iframe fittable to this component.
         this.playerNode.style.position = "absolute";
       },
@@ -69,6 +73,12 @@ license that can be found in the LICENSE file.
         if (this.player) {
           this.player.stopVideo();
           this.playerNode.hidden = true;
+        }
+      },
+      mutedChanged: function() {
+        var p = this.player;
+        if (p) {
+          p[this.muted ? 'mute' : 'unMute']();
         }
       }
     });
