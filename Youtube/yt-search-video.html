@@ -5,7 +5,7 @@ license that can be found in the LICENSE file.
 -->
 <link rel="import" href="yt-video.html">
 <link rel="import" href="yt-search.html">
-<element name="yt-search-video" attributes="ImFeelingLucky index maxResults">
+<element name="yt-search-video" attributes="ImFeelingLucky muted index maxResults">
   <template>
     <style>
       @host {
@@ -16,11 +16,12 @@ license that can be found in the LICENSE file.
       }
     </style>
     <yt-search id="search" maxResults="{{maxResults}}" list="{{list}}"></yt-search>
-    <yt-video id="video" videoEntry="{{video}}"></yt-video>
+    <yt-video id="video" videoEntry="{{video}}" muted="{{muted}}"></yt-video>
   </template>
   <script>
     Polymer.register(this, {
       ImFeelingLucky: '',
+      muted: false,
       index: 0,
       maxResults: 50,
       ImFeelingLuckyChanged: function() {
