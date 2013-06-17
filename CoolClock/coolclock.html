@@ -31,7 +31,7 @@ license that can be found in the LICENSE file.
       skinChanged: function() {
         this.canvas.className = 'CoolClock:' + this.skin;
       },
-      insertedCallback: function() {
+      inserted: function() {
         CoolClock.findAndCreateClocks(this.$.clock);
       }
     });    
