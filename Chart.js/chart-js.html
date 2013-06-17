@@ -24,7 +24,7 @@ license that can be found in the LICENSE file.
       options: null,
       color: '#AABBDD',
       dataString: '28,48,40,19,96,27,100',
-      insertedCallback: function() {
+      inserted: function() {
         this.$.chart.width = Math.max(this.offsetWidth, 100);
         this.$.chart.height = Math.max(this.offsetHeight, 100);
         //Get the context of the canvas element we want to select
