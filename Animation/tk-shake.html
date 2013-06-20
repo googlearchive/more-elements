@@ -1,6 +1,6 @@
 <link rel="import" href="../../toolkit-ui/elements/animation/g-shake.html">
 <script src="tk-proto.js"></script>
-<element name="tk-shake" extends="g-shake" on-click="clickHandler">
+<polymer-element name="tk-shake" extends="g-shake" on-click="clickHandler">
   <template>
     <style>
       @host {
@@ -35,6 +35,6 @@
     {{animationName}}:{{targetLabel}}
   </template>
   <script>
-    Polymer.register(this, tkAnimationProto('shake'));
+    Polymer('tk-shake', tkAnimationProto('shake'));
   </script>
-</element>
+</polymer-element>
