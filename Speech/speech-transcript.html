@@ -6,7 +6,7 @@
  */
 -->
 <link rel="import" href="speech-mic.html">
-<element name="speech-transcript" attributes="transcript">
+<polymer-element name="speech-transcript" attributes="transcript">
   <template>
     <style>
       @host {
@@ -21,9 +21,9 @@
     <div>{{transcript}}</div>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('speech-transcript', {
       transcript: ''
     });
   </script>
-</element>
+</polymer-element>
 

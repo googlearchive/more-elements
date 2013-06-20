@@ -4,12 +4,12 @@ Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
 <script src="smoothie.min.js"></script>
-<element name="smoothie-chart">
+<polymer-element name="smoothie-chart">
   <template>
     <canvas id="canvas" width="300" height="100"></canvas>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('smoothie-chart', {
       grid: {
         strokeStyle:'rgb(128, 128, 64)', 
         fillStyle:'rgb(0, 0, 0)',
@@ -51,5 +51,5 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>
 
