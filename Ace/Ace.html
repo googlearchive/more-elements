@@ -36,7 +36,7 @@ license that can be found in the LICENSE file.
       wrap: false,
       // allow styling from the outside world!
       applyAuthorStyles: true,
-      inserted: function() {
+      ready: function() {
         ace.config.set('basePath', this.resolvePath('src-min-noconflict/'));
         this.editor = ace.edit(this.$.editor);
         this.editor.focus();
@@ -107,7 +107,7 @@ license that can be found in the LICENSE file.
       },
       editorBlur: function(event) {
         if (this._value !== null && this._value != this.editorValue) {
-          this.send('editor-change', {value: this.editorValue, oldValue: this._value});
+          this.fire('editor-change', {value: this.editorValue, oldValue: this._value});
         }
         this._value = this.editorValue;
       },

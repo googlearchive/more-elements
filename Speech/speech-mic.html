@@ -78,7 +78,7 @@
         }
         this.transcript = t;
         this.completeTranscript = ct;
-        this.send('result', {results: e.results, transcript: t, 
+        this.fire('result', {results: e.results, transcript: t, 
           finalTranscript: ft, completeTranscript: ct});
       },
       error: function(e) {
