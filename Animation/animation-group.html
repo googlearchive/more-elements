@@ -1,5 +1,5 @@
 <link rel="import" href="../../toolkit-ui/elements/animation/all.html">
-<element name="animation-group" extends="g-animation-group" on-click="clickHandler">
+<polymer-element name="animation-group" extends="g-animation-group" on-click="clickHandler">
   <template>
     <style>
       @host {
@@ -19,7 +19,7 @@
     </div>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('animation-group', {
       publish: {
         type: 'seq'
       },
@@ -34,4 +34,4 @@
       }
     });
   </script>
-</element>
+</polymer-element>

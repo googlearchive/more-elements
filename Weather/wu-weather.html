@@ -3,8 +3,8 @@ Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<link rel="import" href="../../toolkit-ui/elements/g-jsonp.html"/>
-<element name="wu-weather" attributes="autoupdate">
+<link rel="import" href="../../polymer-elements/polymer-jsonp/polymer-jsonp.html"/>
+<polymer-element name="wu-weather" attributes="autoupdate">
   <template>
     <style>
       @host {
@@ -61,13 +61,13 @@ license that can be found in the LICENSE file.
         </div>
       </template>
     </div>
-    <g-jsonp id="jsonp_current" handleAs="json" 
-        response="{{currentConditionsResponse}}"></g-jsonp>
-    <g-jsonp id="jsonp_forecast" handleAs="json"
-        response="{{forecastResponse}}"></g-jsonp>
+    <polymer-jsonp id="jsonp_current" handleAs="json" 
+        response="{{currentConditionsResponse}}"></polymer-jsonp>
+    <polymer-jsonp id="jsonp_forecast" handleAs="json"
+        response="{{forecastResponse}}"></polymer-jsonp>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('wu-weather', {
       position: null,
       currentConditionsResponse: null,
       forecastResponse: null,
@@ -156,4 +156,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>
