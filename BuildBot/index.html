@@ -7,14 +7,14 @@
   </head>
   <body>
     <buildbot-polymer></buildbot-polymer>
-    <element name="buildbot-polymer">
+    <polymer-element name="buildbot-polymer">
       <template>
         <template repeat="{{builders}}">
           <p><tk-buildbot builder="{{name}}" inactive="{{inactive}}"></tk-buildbot></p>
         </template>
       </template>
       <script>
-        Polymer.register(this, {
+        Polymer('buildbot-polymer', {
           publish: {
             builders: [],
             platforms: ['Mac', 'Linux', 'Win'],
@@ -46,6 +46,6 @@
           }
         });
       </script>
-    </element>
+    </polymer-element>
   </body>
 </html>

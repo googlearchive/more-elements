@@ -5,7 +5,7 @@
  * license that can be found in the LICENSE file.
  */
 -->
-<element name="speech-mic">
+<polymer-element name="speech-mic">
   <template>
     <style>
       @host {
@@ -32,12 +32,12 @@
         100% {-webkit-transform: scale(1);}
       }
     </style>
-    <div id="mic" recognizing="{{recognizing}}" on-click="micClick"></div>
+    <div id="mic" recognizing="{{recognizing}}" on-click="toggleRecognition"></div>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('speech-mic', {
       publish: {
-        lang: 'en-US',
+        language: 'en-US',
         transcript: '',
         completeTranscript: ''
       },
@@ -49,7 +49,7 @@
           this.recognition = new webkitSpeechRecognition();
           this.recognition.continuous = true;
           this.recognition.interimResults = true;
-          this.recognition.lang = this.lang;
+          this.recognition.lang = this.language;
           
           this.recognition.onstart = this.start.bind(this);
           this.recognition.onresult = this.result.bind(this);
@@ -59,7 +59,7 @@
           this.$.mic.hidden = true;
         }
       },
-      micClick: function() {
+      toggleRecognition: function() {
         if (this.recognizing) {
           this.recognition.stop();
         } else {
@@ -78,7 +78,7 @@
         }
         this.transcript = t;
         this.completeTranscript = ct;
-        this.send('result', {results: e.results, transcript: t, 
+        this.fire('result', {results: e.results, transcript: t, 
           finalTranscript: ft, completeTranscript: ct});
       },
       error: function(e) {
@@ -88,4 +88,4 @@
       }
     });
   </script>
-</element>
+</polymer-element>

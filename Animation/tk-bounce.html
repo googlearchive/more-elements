@@ -1,6 +1,6 @@
 <link rel="import" href="../../toolkit-ui/elements/animation/g-bounce.html">
 <script src="tk-proto.js"></script>
-<element name="tk-bounce" extends="g-bounce" on-click="clickHandler">
+<polymer-element name="tk-bounce" extends="g-bounce" on-click="clickHandler">
   <template>
     <style>
       @host {
@@ -16,6 +16,6 @@
     {{animationName}}:{{targetLabel}}
   </template>
   <script>
-    Polymer.register(this, tkAnimationProto('bounce'));
+    Polymer('tk-bounce', tkAnimationProto('bounce'));
   </script>
-</element>
+</polymer-element>
