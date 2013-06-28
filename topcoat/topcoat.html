@@ -1,10 +1,5 @@
 ﻿<polymer-element name="topcoat-button" attributes="active disabled">
   <template>
-    <style>
-      @host {*{
-        display: inline-block;
-      }}
-    </style>
     <a class="topcoat-button {{isdisabled: disabled}}"><content></content></a>
   </template>
   <script>
@@ -16,15 +11,20 @@
   </script>
 </polymer-element>
 
-<polymer-element name="topcoat-icon-button" attributes="active disabled">
+<polymer-element name="xtopcoat-button" attributes="active disabled" class="topcoat-button">
+  <script>
+    Polymer('topcoat-button', {
+      applyAuthorStyles: true,
+      active: true,
+      disabled: false
+    });
+  </script>
+</polymer-element>
+
+<polymer-element name="topcoat-icon-button" attributes="icon active disabled">
   <template>
-    <style>
-      @host {*{
-        display: inline-block;
-      }}
-    </style>
     <a class="topcoat-icon-button">
-      <span class="topcoat-icon topcoat-icon--menu-stack"></span>
+      <span class="topcoat-icon topcoat-icon--{{icon}}"></span>
     </a>
   </template>
   <script>
@@ -44,7 +44,7 @@
   </script>
 </polymer-element>
 
-<polymer-element name="topcoat-list" attributes="header">
+<polymer-element name="xtopcoat-list" attributes="header">
   <template>
     <style>
       @host {*{
@@ -61,6 +61,35 @@
   <script>
     Polymer('topcoat-list', {
       applyAuthorStyles: true
+    });
+  </script>
+</polymer-element>
+
+<polymer-element name="topcoat-list" attributes="header">
+  <template>
+    <style>
+      @host {*{
+        display: block;
+      }}
+    </style>
+    <div class="topcoat-list__container">
+      <h3 class="topcoat-list__header">{{header}}</h3>
+      <ul class="topcoat-list">
+        <template repeat="{{items}}">
+          <li class="topcoat-list__item"><content select="{{slctr}}"></content></li>
+        </template>
+      </ul>
+    </div>
+  </template>
+  <script>
+    Polymer('topcoat-list', {
+      applyAuthorStyles: true,
+      ready: function() {
+        this.items = this.children.array().map(function(n, i) {
+          n.setAttribute('i', 'n' + i);
+          return {slctr: '[i=n' + i + ']'};
+        });
+      }
     });
   </script>
 </polymer-element>
