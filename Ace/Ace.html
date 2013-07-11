@@ -4,7 +4,7 @@ Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
 <script src="src-min-noconflict/ace.js"></script>
-<element name="ajaxorg-ace" attributes="theme mode value readonly wrap fontSize tabSize">
+<polymer-element name="ajaxorg-ace" attributes="theme mode value readonly wrap fontSize tabSize">
   <template>
     <style type="text/css" media="screen">
       @host {
@@ -17,7 +17,6 @@ license that can be found in the LICENSE file.
           right: 0;
         }
       }
-
       .ajaxorg-ace {
           position: absolute;
           top: 0;
@@ -28,9 +27,8 @@ license that can be found in the LICENSE file.
     </style>
     <div class="ajaxorg-ace" id="editor"></div>
   </template>
-
   <script>
-    Polymer.register(this, {
+    Polymer('ajaxorg-ace', {
       mode: 'javascript',
       theme: 'monokai',
       readonly: false,
@@ -109,7 +107,7 @@ license that can be found in the LICENSE file.
       },
       editorBlur: function(event) {
         if (this._value !== null && this._value != this.editorValue) {
-          this.send('editor-change', {value: this.editorValue, oldValue: this._value});
+          this.fire('editor-change', {value: this.editorValue, oldValue: this._value});
         }
         this._value = this.editorValue;
       },
@@ -125,4 +123,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>

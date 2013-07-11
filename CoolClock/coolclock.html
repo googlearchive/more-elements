@@ -5,12 +5,12 @@ license that can be found in the LICENSE file.
 -->
 <script src="coolclock.js"></script>
 <script src="moreskins.js"></script>
-<element name="x-coolclock" attributes="skin">
+<polymer-element name="x-coolclock" attributes="skin">
   <template>
     <span id="clock"></span>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('x-coolclock', {
       skin: '', //'Babosa',
       ready: function() {
         // TODO(sorvell): create the canvas element manually becase ios 
@@ -36,4 +36,4 @@ license that can be found in the LICENSE file.
       }
     });    
   </script>
-</element>
+</polymer-element>

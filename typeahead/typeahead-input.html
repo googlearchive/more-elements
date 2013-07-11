@@ -1,4 +1,4 @@
-<element name="typeahead-input">
+<polymer-element name="typeahead-input">
   <template>
     <style>
       @host {
@@ -41,7 +41,7 @@
     <input id="input" type="text" on-input="inputHandler" on-keydown="keydownHandler" on-click="clickHandler">
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('typeahead-input', {
       publish: {
         values: [],
         delimiter: '.',
@@ -77,7 +77,7 @@
         var details = {
           query: base
         };
-        this.send('typeahead-delimiter', details);
+        this.fire('typeahead-delimiter', details);
         this.values = details.values || [];
         this.base = base;
       },
@@ -117,4 +117,4 @@
       }
     });
   </script>
-</element>
+</polymer-element>

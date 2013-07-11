@@ -12,7 +12,7 @@ license that can be found in the LICENSE file.
   //PDFJS.workerSrc = 'pdf.min.js';
 </script>
 
-<element name="pdf-js" attributes="src scale page">
+<polymer-element name="pdf-js" attributes="src scale page">
   <template>
     <style>
       @host {
@@ -33,7 +33,7 @@ license that can be found in the LICENSE file.
     <canvas id="pdfCanvas" style="border:1px solid gray; background-color: white;"/>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('pdf-js', {
       scale: 1,
       page: 1,
       src: '',
@@ -90,4 +90,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>

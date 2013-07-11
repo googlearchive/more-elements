@@ -3,8 +3,8 @@ Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<link rel="import" href="../../toolkit-ui/elements/g-jsonp.html">
-<element name="x-stock" attributes="symbol autoupdate">
+<link rel="import" href="../../polymer-elements/polymer-jsonp/polymer-jsonp.html">
+<polymer-element name="x-stock" attributes="symbol autoupdate">
   <template>
     <style>
       .stock-label {
@@ -95,10 +95,10 @@ license that can be found in the LICENSE file.
         <div><label>Mkt Cap</label>{{response.mc}}</div>
       </div>
     </div>
-    <g-jsonp id="jsonp" response="{{jsonpResponse}}"></g-jsonp>
+    <polymer-jsonp id="jsonp" response="{{jsonpResponse}}"></polymer-jsonp>
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('x-stock', {
       symbol: '',
       updateinterval: 60000,
       jsonpResponse:null,
@@ -135,4 +135,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>
-</element>
+</polymer-element>

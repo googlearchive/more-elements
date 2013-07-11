@@ -1,6 +1,6 @@
 <link rel="import" href="../../toolkit-ui/elements/animation/g-blink.html">
 <script src="tk-proto.js"></script>
-<element name="tk-blink" extends="g-blink" on-click="clickHandler">
+<polymer-element name="tk-blink" extends="g-blink" on-click="clickHandler">
   <template>
     <style>
       @host {
@@ -16,6 +16,6 @@
     {{animationName}}:{{targetLabel}}
   </template>
   <script>
-    Polymer.register(this, tkAnimationProto('blink'));
+    Polymer('tk-blink', tkAnimationProto('blink'));
   </script>
-</element>
+</polymer-element>
