@@ -14,7 +14,7 @@
   </head>
   <body>
     <typeahead-test></typeahead-test>
-    <element name="typeahead-test">
+    <polymer-element name="typeahead-test">
       <template>
         <style>
           typeahead-input {
@@ -47,38 +47,36 @@
         </div>
       </template>
       <script>
-        Polymer.register(this, {
-          publish: {
-            data: [{
-              selected: true,
-              values: [
-                'apple',
-                'zebra',
-                'orange',
-                'yellow',
-                'awesome'
-                ]
-            }, {
-              selected: false,
-              values: [
-                'zonk',
-                'baa',
-                'sheep',
-                'happy',
-                'house'
+        Polymer('typeahead-test', {
+          data: [{
+            selected: true,
+            values: [
+              'apple',
+              'zebra',
+              'orange',
+              'yellow',
+              'awesome'
               ]
-            }, {
-              selected: false,
-              values: [
-                'moo',
-                'spazz',
-                'lemons',
-                'duck',
-                'straw'
-              ]
-            }],
-            selected: 0
-          },
+          }, {
+            selected: false,
+            values: [
+              'zonk',
+              'baa',
+              'sheep',
+              'happy',
+              'house'
+            ]
+          }, {
+            selected: false,
+            values: [
+              'moo',
+              'spazz',
+              'lemons',
+              'duck',
+              'straw'
+            ]
+          }],
+          selected: 0,
           ready: function() {
             this.$.typeahead.values = this.selectedValues;
           },
@@ -92,9 +90,9 @@
           },
           get selectedValues() {
             return this.data[this.selected % 3].values;
-          },
+          }
         });
       </script>
-    </element>
+    </polymer-element>
   </body>
 </html>

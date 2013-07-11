@@ -4,7 +4,7 @@ Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
 <script src="Chart.min.js"></script>
-<element name="chart-js" attributes="data dataString kind color options">
+<polymer-element name="chart-js" attributes="data dataString kind color options">
   <template>
     <style>
       @host {
@@ -18,7 +18,7 @@ license that can be found in the LICENSE file.
     <canvas id="chart" width="100" height="100"></canvas> 
   </template>
   <script>
-    Polymer.register(this, {
+    Polymer('chart-js', {
       kind: '',
       data: null,
       options: null,
@@ -84,4 +84,4 @@ license that can be found in the LICENSE file.
       }
     });
   </script>  
-</element>
+</polymer-element>
