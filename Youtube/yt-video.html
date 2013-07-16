@@ -10,6 +10,7 @@ license that can be found in the LICENSE file.
         * {
           background: url(images/logo.png) no-repeat center;
           display: block;
+          position: relative;
         }
       } 
     </style>
@@ -28,11 +29,16 @@ license that can be found in the LICENSE file.
             } else {
              this.createPlayer();
             }
+          } else {
+            this.clearVideo();
           }
+          this.setAttribute('videoid', this.videoId);
         },
         videoEntryChanged: function() {
           if (this.videoEntry && this.videoEntry.media$group) {
             this.videoId = this.videoEntry.media$group.yt$videoid.$t;
+          } else {
+            this.videoId = '';
           }
         },
         createPlayer: function() {
