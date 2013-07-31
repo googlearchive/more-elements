@@ -13,6 +13,12 @@ license that can be found in the LICENSE file.
     Polymer('cool-clock', {
       skin: '', //'Babosa',
       ready: function() {
+        
+      },
+      skinChanged: function() {
+        this.canvas.className = 'CoolClock:' + this.skin;
+      },
+      inserted: function() {
         // TODO(sorvell): create the canvas element manually becase ios 
         // does not render the canvas element if it is not created in the
         // main document (component templates are created in a 
@@ -26,13 +32,9 @@ license that can be found in the LICENSE file.
           var i = Math.floor(Math.random() * skins.length);
           this.skin = skins[i];
         }
-        Platform.flush();
-      },
-      skinChanged: function() {
-        this.canvas.className = 'CoolClock:' + this.skin;
-      },
-      inserted: function() {
-        CoolClock.findAndCreateClocks(this.$.clock);
+        this.async(function() {
+          CoolClock.findAndCreateClocks(this.$.clock);
+        });
       }
     });    
   </script>
