@@ -1,6 +1,6 @@
-<link rel="import" href="../../toolkit-ui/elements/animation/g-shake.html">
+<link rel="import" href="../../polymer-elements/polymer-animation/polymer-shake.html">
 <script src="tk-proto.js"></script>
-<polymer-element name="tk-shake" extends="g-shake" on-click="clickHandler">
+<polymer-element name="tk-shake" extends="polymer-shake" on-click="clickHandler">
   <template>
     <style>
       @host {
@@ -13,25 +13,40 @@
         }
       }
     </style>
-    <g-animation duration="{{period}}">
-      <g-property name="transform">
-        <g-keyframe value="translateX(0px)"></g-keyframe>
-        <g-keyframe value="{{negTransform}}"></g-keyframe>
-      </g-property>
-    </g-animation>
-    <g-animation duration="{{shakeDuration}}" iterationCount="{{shakeIterations}}">
-      <g-property name="transform">
-        <g-keyframe value="{{negTransform}}"></g-keyframe>
-        <g-keyframe value="{{posTransform}}"></g-keyframe>
-        <g-keyframe value="{{negTransform}}"></g-keyframe>
-      </g-property>
-    </g-animation>
-    <g-animation duration="{{period}}">
-      <g-property name="transform">
-        <g-keyframe value="{{negTransform}}"></g-keyframe>
-        <g-keyframe value="translateX(0px)"></g-keyframe>
-      </g-property>
-    </g-animation>
+    <polymer-animation duration="{{period}}">
+      <polymer-animation-keyframe>
+        <polymer-animation-prop name="transform" value="translateX(0px)">
+        </polymer-animation-prop>
+      </polymer-animation-keyframe>
+      <polymer-animation-keyframe>
+        <polymer-animation-prop name="transform" value="{{negTransform}}">
+        </polymer-animation-prop>
+      </polymer-animation-keyframe>
+    </polymer-animation>
+    <polymer-animation duration="{{shakeDuration}}" iterationCount="{{shakeIterations}}">
+      <polymer-animation-keyframe>
+        <polymer-animation-prop name="transform" value="{{negTransform}}">
+        </polymer-animation-prop>
+      </polymer-animation-keyframe>
+      <polymer-animation-keyframe>
+        <polymer-animation-prop name="transform" value="{{posTransform}}">
+        </polymer-animation-prop>
+      </polymer-animation-keyframe>
+      <polymer-animation-keyframe>
+        <polymer-animation-prop name="transform" value="{{negTransform}}">
+        </polymer-animation-prop>
+      </polymer-animation-keyframe>
+    </polymer-animation>
+    <polymer-animation duration="{{period}}">
+      <polymer-animation-keyframe>
+        <polymer-animation-prop name="transform" value="{{negTransform}}">
+        </polymer-animation-prop>
+      </polymer-animation-keyframe>
+      <polymer-animation-keyframe>
+        <polymer-animation-prop name="transform" value="translateX(0px)">
+        </polymer-animation-prop>
+      </polymer-animation-keyframe>
+    </polymer-animation>
     {{animationName}}:{{targetLabel}}
   </template>
   <script>
