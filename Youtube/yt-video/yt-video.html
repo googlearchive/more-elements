@@ -42,7 +42,7 @@ license that can be found in the LICENSE file.
           }
         },
         createPlayer: function() {
-          if (!window.YT) {
+          if (!(window.YT && window.YT.Player)) {
             loadYtApi(this);
             return;
           }
