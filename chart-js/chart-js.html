@@ -43,7 +43,7 @@ license that can be found in the LICENSE file.
         ] : [0, 0, 0];
       },
       updateChart: function() {
-        if (this.data) {
+        if (this.data && this.ctx) {
           console.log(this.data);
           var chart = new Chart(this.ctx);
           var kind = this.kind;
