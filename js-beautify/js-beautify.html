@@ -10,7 +10,7 @@ license that can be found in the LICENSE file.
     Polymer('js-beautify', {
       html: '',
       options: null,
-      ready: function() {
+      created: function() {
         this.html = this.innerHTML;
       },
       htmlChanged: function() {

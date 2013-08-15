@@ -12,13 +12,13 @@ license that can be found in the LICENSE file.
   <script>
     Polymer('cool-clock', {
       skin: '', //'Babosa',
-      ready: function() {
+      created: function() {
         
       },
       skinChanged: function() {
         this.canvas.className = 'CoolClock:' + this.skin;
       },
-      inserted: function() {
+      enteredDocument: function() {
         // TODO(sorvell): create the canvas element manually becase ios 
         // does not render the canvas element if it is not created in the
         // main document (component templates are created in a 

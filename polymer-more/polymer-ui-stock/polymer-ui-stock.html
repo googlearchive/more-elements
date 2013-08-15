@@ -33,7 +33,7 @@ license that can be found in the LICENSE file.
         timeData: null,
         autoupdate: false,
         updateinterval: 60000,
-        ready: function() {
+        created: function() {
           //this.$.ajax.url = this.resolvePath('mock/polymer-ui-stock-test-data.json');
           if (this.symbols === '') {
             this.symbols = '.INX,NDAQ,.DJI';

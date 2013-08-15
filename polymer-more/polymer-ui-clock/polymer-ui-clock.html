@@ -25,7 +25,7 @@ license that can be found in the LICENSE file.
         seconds: -1,
         minutes: -1,
         hours: -1,
-        inserted: function() {
+        enteredDocument: function() {
           // when we are inserted into DOM, start watching the time
           this.updateTime();
           this.interval = setInterval(this.updateTime.bind(this), 1000);

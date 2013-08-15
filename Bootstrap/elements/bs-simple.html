@@ -25,7 +25,7 @@
     </template>
     <script>
       Polymer('bp-btn-navbar', {
-        ready: function() {
+        created: function() {
           this.classList.add('btn', 'btn-navbar');
           this.setAttribute('data-toggle', 'collapse');
           this.setAttribute('data-target', '.nav-collapse');
@@ -37,7 +37,7 @@
   <polymer-element name="bp-icon-bar">
     <script>
       Polymer('bp-icon-bar', {
-        ready: function() {
+        created: function() {
           this.classList.add('icon-bar');
         }
       });
@@ -47,7 +47,7 @@
   <polymer-element name="bp-brand" extends="a">
     <script>
       Polymer('bp-brand', {
-        ready: function() {
+        created: function() {
           this.classList.add('brand');
         }
       });
@@ -57,7 +57,7 @@
   <polymer-element name="bp-nav-collapse" extends="p">
     <script>
       Polymer('bp-nav-collapse', {
-        ready: function() {
+        created: function() {
           this.classList.add('nav-collapse', 'collapse');
         }
       });
@@ -67,7 +67,7 @@
   <polymer-element name="bp-navbar-text-right" extends="p">
     <script>
       Polymer('bp-navbar-text-right', {
-        ready: function() {
+        created: function() {
           this.classList.add('navbar-text', 'pull-right');
         }
       });
@@ -77,7 +77,7 @@
   <polymer-element name="bp-navbar-link" extends="a">
     <script>
       Polymer('bp-navbar-link', {
-        ready: function() {
+        created: function() {
           this.classList.add('navbar-link');
         }
       });
@@ -91,7 +91,7 @@
     <script>
       Polymer('bp-nav', {
         selectedClass: 'active',
-        ready: function() {
+        created: function() {
           this.super();
           this.classList.add('nav');
         }
@@ -106,7 +106,7 @@
     </template>
     <script>
       this.component && this.component({
-        ready: function() {
+        created: function() {
            this.nameChanged();
         },
         nameChanged: function() {
@@ -121,7 +121,7 @@
     </template>
     <script>
       this.component && this.component({
-        ready: function() {
+        created: function() {
            this.nameChanged();
         },
         nameChanged: function() {

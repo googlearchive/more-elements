@@ -1,4 +1,4 @@
-﻿<polymer-element name="topcoat-button" attributes="active disabled">
+<polymer-element name="topcoat-button" attributes="active disabled">
   <template>
     <a class="topcoat-button {{isdisabled: disabled}}"><content></content></a>
   </template>
@@ -84,7 +84,7 @@
   <script>
     Polymer('topcoat-list', {
       applyAuthorStyles: true,
-      ready: function() {
+      created: function() {
         this.items = this.children.array().map(function(n, i) {
           n.setAttribute('i', 'n' + i);
           return {slctr: '[i=n' + i + ']'};
