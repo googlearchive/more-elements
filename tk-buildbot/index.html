@@ -22,10 +22,10 @@
               'polymer',
               'platform',
               'CustomElements',
-              'mdv',
-              'PointerGestures',
+              'HTMLImports',
               'ShadowDOM',
-              'HTMLImports'
+              'PointerEvents',
+              'PointerGestures',
             ]
           },
           created: function() {
@@ -38,7 +38,7 @@
               platforms.forEach(function(platform) {
                 builders.push({
                   name: project + ' ' + platform,
-                  inactive: platform === 'Win'
+                  inactive: false
                 });
               });
             });
