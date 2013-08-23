@@ -1,3 +1,6 @@
 [submodule "x-tags/x-tag"]
 	path = x-tags/x-tag
 	url = git://github.com/pennyfx/x-tag-demo.git
+[submodule "tools"]
+	path = tools
+	url = https://github.com/Polymer/tools.git
