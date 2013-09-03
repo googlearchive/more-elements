@@ -11,13 +11,6 @@ license that can be found in the LICENSE file.
         * {
           position: relative;
           display: block;
-          width: 300px;
-          height: 300px;
-          border: 1px solid gray;
-          padding: 4px;
-          font-family: Arial, sans-serif;
-          font-size: 12px;
-          background-color: whitesmoke;
         }
       }
     </style>
@@ -25,6 +18,7 @@ license that can be found in the LICENSE file.
   </template>
   <script>
     Polymer('marked-js', {
+      allowAuthorStyles: true,
       text: '',
       created: function() {
         this.text = this.textContent;
