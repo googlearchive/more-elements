@@ -10,12 +10,19 @@ license that can be found in the LICENSE file.
       text: '',
       allowAuthorStyles: true,
       enteredDocument: function() {
+
+        marked.setOptions({
+          highlight: this.highlight.bind(this)
+        });
         if (!this.text) {
           this.text = this.textContent;
         }
       },
       textChanged: function () {
         this.innerHTML = marked(this.text.replace(/\\n/g, '\n'));
+      },
+      highlight: function(code, lang) {
+        return this.fire('marked-js-highlight', {code: code, lang: lang}).code || code;
       }
     });
   </script>
