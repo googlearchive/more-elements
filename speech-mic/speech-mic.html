@@ -13,7 +13,7 @@
           display: inline-block;
         }
       }
-      
+
       #mic {
         width: 40px;
         height: 40px;
@@ -21,26 +21,28 @@
         background: url(images/mic.png) center no-repeat;
         cursor: pointer;
       }
-      
+
       #mic[recognizing=true] {
         background-color: red;
         -webkit-animation: zoom 0.75s linear infinite;
       }
-      
+
       @-webkit-keyframes zoom {
         0% {-webkit-transform: scale(0.75);}
         100% {-webkit-transform: scale(1);}
+      }
+
+      [hidden] {
+       display: none;
       }
     </style>
     <div id="mic" recognizing="{{recognizing}}" on-click="toggleRecognition"></div>
   </template>
   <script>
     Polymer('speech-mic', {
-      publish: {
-        language: 'en-US',
-        transcript: '',
-        completeTranscript: ''
-      },
+     language: 'en-US',
+     transcript: '',
+     completeTranscript: '',
       stop: function() {
         this.recognition && this.recognition.stop();
       },
@@ -50,20 +52,21 @@
           this.recognition.continuous = true;
           this.recognition.interimResults = true;
           this.recognition.lang = this.language;
-          
           this.recognition.onstart = this.start.bind(this);
           this.recognition.onresult = this.result.bind(this);
           this.recognition.onerror = this.error.bind(this);
           this.recognition.onend = this.end.bind(this);
         } else {
-          this.$.mic.hidden = true;
+          this.$.mic.setAttribute('hidden');
         }
       },
       toggleRecognition: function() {
-        if (this.recognizing) {
-          this.recognition.stop();
-        } else {
-          this.recognition.start();
+        if (this.recognition) {
+          if (this.recognizing) {
+            this.recognition.stop();
+          } else {
+            this.recognition.start();
+          }
         }
       },
       start: function(e) {
@@ -78,7 +81,7 @@
         }
         this.transcript = t;
         this.completeTranscript = ct;
-        this.fire('result', {results: e.results, transcript: t, 
+        this.fire('result', {results: e.results, transcript: t,
           finalTranscript: ft, completeTranscript: ct});
       },
       error: function(e) {
