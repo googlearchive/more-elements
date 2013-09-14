@@ -36,7 +36,18 @@ license that can be found in the LICENSE file.
       wrap: false,
       // allow styling from the outside world!
       applyAuthorStyles: true,
+      // TODO(sorvell): to work in IE reliably, can only be 
+      // created in enteredView. However, api that wants to access this.editor
+      // may be used before that. Instead of making each function bail if
+      // this.editor is not set, we create a dummy editor. At editor
+      // initialization time, any pending changes are synch'd.
       created: function() {
+        this.editor = ace.edit(document.createElement('div'));
+      },
+      enteredView: function() {
+        this.initializeEditor();
+      },
+      initializeEditor: function() {
         ace.config.set('basePath', this.resolvePath('src-min-noconflict/'));
         this.editor = ace.edit(this.$.editor);
         this.editor.focus();
@@ -45,7 +56,8 @@ license that can be found in the LICENSE file.
         this.readonlyChanged();
         this.wrapChanged();
         this.tabSizeChanged();
-        this.editor.on("blur", this.editorBlur.bind(this));
+        this.editor.on("blur", this.editorBlurAction.bind(this));
+        this.editor.on('change', this.editorChangeAction.bind(this));
         this.value = this.textContent;
       },
       fontSizeChanged: function() {
@@ -105,11 +117,14 @@ license that can be found in the LICENSE file.
         this.editor.getSession().selection.moveCursorLineStart();
         this.editor.clearSelection();
       },
-      editorBlur: function(event) {
+      editorBlurAction: function(event) {
         if (this._value !== null && this._value != this.editorValue) {
           this.fire('editor-change', {value: this.editorValue, oldValue: this._value});
         }
         this._value = this.editorValue;
+      },
+      editorChangeAction: function() {
+        this.fire('editor-input', {value: this.editorValue, oldValue: this._value});
       },
       get editorValue() {
         return this.editor.getValue();
