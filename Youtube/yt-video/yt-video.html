@@ -22,9 +22,13 @@ license that can be found in the LICENSE file.
         videoId: '',
         videoEntry: '',
         muted: false,
+        ready: function() {
+          this.createPlayer();
+        },
         videoIdChanged: function() {
           if (this.videoId && this.videoId !== true) {
             if (this.player) {
+              this.playerNode.hidden = false;
              this.player.loadVideoById(this.videoId);
             } else {
              this.createPlayer();
@@ -115,7 +119,8 @@ license that can be found in the LICENSE file.
       
       function youtubeApiReady() {
         ytListeners.forEach(function(l) {
-          l.videoIdChanged();
+          //l.videoIdChanged();
+          l.createPlayer();
         });
       }
     })();
