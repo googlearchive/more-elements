@@ -144,8 +144,10 @@ license that can be found in the LICENSE file.
         this.saveToStorage();
       },
       forecastResponseChanged: function() {
-        this.forecast = this.forecastResponse.forecast.simpleforecast;
-        this.saveToStorage();
+        if (this.forecastResponse) {
+          this.forecast = this.forecastResponse.forecast.simpleforecast;
+          this.saveToStorage();
+        }
       },
       updatePosition: function() {
         // Get the current location.
