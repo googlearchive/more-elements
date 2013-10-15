@@ -1,0 +1,13 @@
+<script src="libphonenumber.js"></script>
+<polymer-element name="libphonenumber-js" attributes="country phone valid formatted">
+	<script>
+		Polymer('libphonenumber-js', {
+			country: 'US',
+			valid: false,
+			phoneChanged: function() {
+				this.formatted = formatLocal(this.country, this.phone);
+				this.valid = isValidNumber(this.country, this.phone);
+			}
+		});
+	</script>
+</polymer-element>

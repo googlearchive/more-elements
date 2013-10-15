@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+	<link href="libphonenumber-js.html" rel="import">
+	<script src="../../polymer/polymer.js"></script>
+</head>
+<body>
+	<polymer-element name="libphonenumber-demo" noscript>
+		<template>
+			<libphonenumber-js phone="{{phone}}" valid="{{valid}}" formatted="{{formatted}}"></libphonenumber-js>
+			<input value="{{phone}}"><br>
+			<p>
+				Valid: {{valid}}<br>
+				Formatted: {{formatted}}
+			</p>
+		</template>
+	</polymer-element>
+	<libphonenumber-demo></libphonenumber-demo>
+</body>
+</html>
