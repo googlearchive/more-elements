@@ -31,7 +31,7 @@ license that can be found in the LICENSE file.
   <script>
     Polymer('code-mirror', {
       skin: '',
-      created: function() {
+      ready: function() {
         this.mirror = CodeMirror(this.shadowRoot, {
           value: "<polymer-element name=\"my-element\">\n\t<template></template>\n\t<script>\n\t\tPolymer('my-element', {\n\t\t});\n\t</scr" + 'ipt>\n</polymer-element>',
           mode: 'htmlmixed',

@@ -46,7 +46,7 @@
       stop: function() {
         this.recognition && this.recognition.stop();
       },
-      created: function() {
+      ready: function() {
         if (window.webkitSpeechRecognition) {
           this.recognition = new webkitSpeechRecognition();
           this.recognition.continuous = true;

@@ -41,7 +41,7 @@ license that can be found in the LICENSE file.
       // may be used before that. Instead of making each function bail if
       // this.editor is not set, we create a dummy editor. At editor
       // initialization time, any pending changes are synch'd.
-      created: function() {
+      ready: function() {
         this.editor = ace.edit(document.createElement('div'));
       },
       enteredView: function() {

@@ -84,7 +84,7 @@
   <script>
     Polymer('topcoat-list', {
       applyAuthorStyles: true,
-      created: function() {
+      ready: function() {
         this.items = this.children.array().map(function(n, i) {
           n.setAttribute('i', 'n' + i);
           return {slctr: '[i=n' + i + ']'};
