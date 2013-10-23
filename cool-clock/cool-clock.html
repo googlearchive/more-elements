@@ -18,7 +18,7 @@ license that can be found in the LICENSE file.
       skinChanged: function() {
         this.canvas.className = 'CoolClock:' + this.skin;
       },
-      enteredDocument: function() {
+      enteredView: function() {
         // TODO(sorvell): create the canvas element manually becase ios 
         // does not render the canvas element if it is not created in the
         // main document (component templates are created in a 

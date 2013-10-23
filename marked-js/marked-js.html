@@ -9,7 +9,7 @@ license that can be found in the LICENSE file.
     Polymer('marked-js', {
       text: '',
       allowAuthorStyles: true,
-      enteredDocument: function() {
+      enteredView: function() {
 
         marked.setOptions({
           highlight: this.highlight.bind(this)
