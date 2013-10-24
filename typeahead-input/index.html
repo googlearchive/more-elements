@@ -35,7 +35,7 @@
             border: 1px solid black;
           }
         </style>
-        <typeahead-input id="typeahead" on-typeahead-delimiter="more"></typeahead-input>
+        <typeahead-input id="typeahead" on-typeahead-delimiter="{{more}}"></typeahead-input>
         <div class="values">
           <template repeat="{{data}}">
             <div selected="{{selected}}">
@@ -77,7 +77,7 @@
             ]
           }],
           selected: 0,
-          created: function() {
+          ready: function() {
             this.$.typeahead.values = this.selectedValues;
           },
           selectedChanged: function(old) {

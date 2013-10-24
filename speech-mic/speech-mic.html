@@ -36,7 +36,7 @@
        display: none;
       }
     </style>
-    <div id="mic" recognizing="{{recognizing}}" on-click="toggleRecognition"></div>
+    <div id="mic" recognizing="{{recognizing}}" on-click="{{toggleRecognition}}"></div>
   </template>
   <script>
     Polymer('speech-mic', {
@@ -46,7 +46,7 @@
       stop: function() {
         this.recognition && this.recognition.stop();
       },
-      created: function() {
+      ready: function() {
         if (window.webkitSpeechRecognition) {
           this.recognition = new webkitSpeechRecognition();
           this.recognition.continuous = true;

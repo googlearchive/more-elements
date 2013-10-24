@@ -1,5 +1,5 @@
 <link rel="import" href="../../toolkit-ui/elements/animation/all.html">
-<polymer-element name="animation-picker" on-click="clickHandler">
+<polymer-element name="animation-picker" on-click="{{clickHandler}}">
   <link rel="stylesheet" href="../../toolkit-ui/elements/css/g-flex-layout.css">
   <template>
     <style>
@@ -46,7 +46,7 @@
           // proxied animation properties
           targetSelector: ''
         },
-        created: function() {
+        ready: function() {
           this.super();
           this.animationTypeChanged();
         },

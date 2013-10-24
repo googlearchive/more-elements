@@ -61,8 +61,8 @@
         margin-right: 5px;
       }
     </style>
-    <g-ajax id="bbot" handleAs="json" on-response="response"></g-ajax>
-    <div class="badge" on-click="toggleDetails">
+    <g-ajax id="bbot" handleAs="json" on-response="{{response}}"></g-ajax>
+    <div class="badge" on-click="{{toggleDetails}}">
       <span class="builder">{{builder}}</span>
       <span class="result {{result.resultStr}}">{{result.resultStr}}</span>
     </div>

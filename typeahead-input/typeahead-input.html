@@ -38,7 +38,7 @@
     </style>
     <span id="measure">{{input}}</span>
     <input id="hint" type="text" disabled value="{{hint}}">
-    <input id="input" type="text" on-input="inputHandler" on-keydown="keydownHandler" on-click="clickHandler">
+    <input id="input" type="text" on-input="{{inputHandler}}" on-keydown="{{keydownHandler}}" on-click="{{clickHandler}}">
   </template>
   <script>
     Polymer('typeahead-input', {

@@ -19,7 +19,7 @@ license that can be found in the LICENSE file.
       count: 40,
       speed: 1,
       playing: false,
-      created: function () {
+      ready: function () {
         this.asyncMethod(function () {
           this.animator = this.animate.bind(this);
           this.prepare();

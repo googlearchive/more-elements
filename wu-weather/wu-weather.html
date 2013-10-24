@@ -79,12 +79,12 @@ license that can be found in the LICENSE file.
           longitude: -122.417725
         }
       },
-      enteredDocument: function() {
+      enteredView: function() {
         this.loadFromStorage();
         this.canAutoUpdate = true;
         this.autoupdateChanged();
       },
-      leftDocument: function() {
+      leftView: function() {
         this.canAutoUpdate = false;
         this.autoupdateChanged();
       },
