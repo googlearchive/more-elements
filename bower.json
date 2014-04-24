@@ -36,6 +36,7 @@
     "x-tree": "Polymer/x-tree#master",
     "yt-search-video": "Polymer/yt-search-video#master",
     "yt-search": "Polymer/yt-search#master",
-    "yt-video": "Polymer/yt-video#master"
+    "yt-video": "Polymer/yt-video#master",
+    "three-js": "Polymer/three-js#master"
   }
 }
