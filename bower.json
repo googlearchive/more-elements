@@ -7,10 +7,7 @@
     "code-mirror": "Polymer/code-mirror#master",
     "cool-clock": "Polymer/cool-clock#master",
     "flatiron-director": "Polymer/flatiron-director#master",
-    "g-kratu": "Polymer/g-kratu#master",
     "google-map": "Polymer/google-map#master",
-    "humane-js": "Polymer/humane-js#master",
-    "js-beautify": "Polymer/js-beautify#master",
     "marked-js": "Polymer/marked-js#master",
     "pdf-js": "Polymer/pdf-js#master",
     "pixi-js": "Polymer/pixi-js#master",
@@ -20,21 +17,8 @@
     "tk-buildbot": "Polymer/tk-buildbot#master",
     "typeahead-input": "Polymer/typeahead-input#master",
     "wu-weather": "Polymer/wu-weather#master",
-    "x-binding": "Polymer/x-binding#master",
-    "x-designable": "Polymer/x-designable#master",
-    "x-designer": "Polymer/x-designer#master",
-    "x-dom-serializer": "Polymer/x-dom-serializer#master",
-    "x-editors": "Polymer/x-editors#master",
-    "x-file-document": "Polymer/x-file-document#master",
-    "x-inspector": "Polymer/x-inspector#master",
-    "x-live-edit": "Polymer/x-live-edit#master",
     "x-meta": "Polymer/x-meta#master",
-    "x-output": "Polymer/x-output#master",
-    "x-palette": "Polymer/x-palette#master",
-    "x-property-inspector": "Polymer/x-property-inspector#master",
     "x-tags": "Polymer/x-tags#master",
-    "x-tree": "Polymer/x-tree#master",
-    "yt-video": "Polymer/yt-video#master",
-    "three-js": "Polymer/three-js#master"
+    "yt-video": "Polymer/yt-video#master"
   }
 }
