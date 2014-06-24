@@ -8,17 +8,9 @@
     "cool-clock": "Polymer/cool-clock#master",
     "flatiron-director": "Polymer/flatiron-director#master",
     "google-map": "Polymer/google-map#master",
-    "marked-js": "Polymer/marked-js#master",
-    "pdf-js": "Polymer/pdf-js#master",
-    "pixi-js": "Polymer/pixi-js#master",
     "smoothie-chart": "Polymer/smoothie-chart#master",
     "speech-mic": "Polymer/speech-mic#master",
-    "speech-transcript": "Polymer/speech-transcript#master",
-    "tk-buildbot": "Polymer/tk-buildbot#master",
-    "typeahead-input": "Polymer/typeahead-input#master",
-    "wu-weather": "Polymer/wu-weather#master",
     "x-meta": "Polymer/x-meta#master",
-    "x-tags": "Polymer/x-tags#master",
     "yt-video": "Polymer/yt-video#master"
   }
 }
