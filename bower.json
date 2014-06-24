@@ -12,6 +12,6 @@
     "speech-mic": "Polymer/speech-mic#master",
     "x-meta": "Polymer/x-meta#master",
     "yt-video": "Polymer/yt-video#master",
-    "notification-elements": "Polymer/notification-elements#master"
+    "notification-elements": "PolymerLabs/notification-elements#master"
   }
 }
